@@ -1,0 +1,34 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+.DS_Store
+
+# Secrets / local config
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+
+# Local signing material
+*-private.key
+private.key
+community-private.key
+
+# Local models / large artifacts
+models/
+*.safetensors
+*.bin
+
+# IDE / editor
+.vscode/
+.idea/

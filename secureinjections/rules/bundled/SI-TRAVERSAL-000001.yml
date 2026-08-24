@@ -1,0 +1,36 @@
+schema_version: 1
+id: SI-TRAVERSAL-000001
+name: Parent-directory traversal
+description: Contains repeated parent-directory traversal segments.
+category: path_traversal
+severity: high
+confidence: 0.9
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- ../../../../public/file.txt
+regex_patterns:
+- (?:\.\.[/\\]){2,}
+- (?:%2e%2e(?:%2f|%5c)){2,}
+literal_patterns: []
+semantic_examples:
+- ../../../../public/file.txt
+negative_examples:
+- A benign discussion of parent-directory traversal defenses.
+tags:
+- path
+- traversal
+references:
+- https://owasp.org/www-community/attacks/Path_Traversal
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: TRAVERSAL.PATH
+legacy_id: PATH-001
+indicator_strength: strong

@@ -1,0 +1,36 @@
+schema_version: 1
+id: SI-SQL-000004
+name: SQL comment termination
+description: Combines quote termination with an inline SQL comment.
+category: sql_injection
+severity: medium
+confidence: 0.75
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- ''' --'
+regex_patterns:
+- (?:'|%27|\")\s*(?:--|#|/\*)
+literal_patterns: []
+semantic_examples:
+- ''' --'
+negative_examples:
+- A benign discussion of sql comment termination defenses.
+tags:
+- sql
+- injection
+- comment
+references:
+- https://github.com/secureinjections/secureinjections/blob/main/docs/threat-taxonomy.md
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: INJECTION.SQL
+legacy_id: SQL-004
+indicator_strength: moderate

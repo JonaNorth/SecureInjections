@@ -1,0 +1,1 @@
+This is a harmless local workspace note for the SecureInjections demo.

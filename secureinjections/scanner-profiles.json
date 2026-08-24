@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "general": {"review_adjustment": 0, "block_adjustment": 0, "technical_context_discount": 1.0, "indirect_instruction_multiplier": 1.0},
+    "chat": {"review_adjustment": 0, "block_adjustment": 0, "technical_context_discount": 1.0, "indirect_instruction_multiplier": 1.0},
+    "customer_support": {"review_adjustment": 4, "block_adjustment": 0, "technical_context_discount": 0.9, "indirect_instruction_multiplier": 1.0},
+    "developer_tool": {"review_adjustment": 3, "block_adjustment": 0, "technical_context_discount": 0.85, "indirect_instruction_multiplier": 1.0},
+    "security_tool": {"review_adjustment": 8, "block_adjustment": 5, "technical_context_discount": 0.65, "indirect_instruction_multiplier": 1.0},
+    "log_ingestion": {"review_adjustment": -5, "block_adjustment": -5, "technical_context_discount": 1.0, "indirect_instruction_multiplier": 1.2},
+    "rag_document": {"review_adjustment": -3, "block_adjustment": 0, "technical_context_discount": 1.0, "indirect_instruction_multiplier": 1.15},
+    "agent_input": {"review_adjustment": -5, "block_adjustment": -5, "technical_context_discount": 1.0, "indirect_instruction_multiplier": 1.2}
+  }
+}

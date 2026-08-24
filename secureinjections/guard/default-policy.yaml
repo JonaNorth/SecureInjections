@@ -1,0 +1,90 @@
+policy_id: secureinjections-guard-default
+version: "0.1"
+source_trust:
+  user: UNTRUSTED
+  system: TRUSTED
+  model: INTERNAL
+  retrieved_content: UNTRUSTED
+  tool_input: INTERNAL
+  tool_output: UNTRUSTED
+  memory: INTERNAL
+  file: UNTRUSTED
+  external: EXTERNAL
+  internal: INTERNAL
+destination_trust:
+  model: INTERNAL
+  tool: INTERNAL
+  memory: INTERNAL
+  user: UNTRUSTED
+  external: EXTERNAL
+  internal: INTERNAL
+rules:
+  - id: block-external-exfiltration
+    when:
+      finding_types: [EXFILTRATION]
+      destinations: [external]
+    decision: BLOCK
+    actions: [block_external_transfer, redact_sensitive_excerpt, log_security_event]
+    reason_code: EXFILTRATION
+  - id: block-persistence
+    when:
+      finding_types: [PERSISTENCE]
+      destinations: [memory]
+    decision: BLOCK
+    actions: [prevent_memory_write, quarantine_content, log_security_event]
+    reason_code: PERSISTENCE
+  - id: block-credential-access
+    when:
+      finding_types: [CREDENTIAL_ACCESS]
+    decision: BLOCK
+    actions: [block_request, redact_sensitive_excerpt, log_security_event]
+    reason_code: CREDENTIAL_ACCESS
+  - id: block-indirect-injection
+    when:
+      finding_types: [INDIRECT_PROMPT_INJECTION]
+      source_trust: [UNTRUSTED, EXTERNAL]
+      destinations: [model, tool, memory]
+    decision: BLOCK
+    actions: [block_request, quarantine_content, log_security_event]
+    reason_code: INDIRECT_PROMPT_INJECTION
+  - id: block-cross-agent-poisoning
+    when:
+      finding_types: [CROSS_AGENT_POISONING]
+      source_trust: [UNTRUSTED, EXTERNAL]
+    decision: BLOCK
+    actions: [block_request, quarantine_content, log_security_event]
+    reason_code: CROSS_AGENT_POISONING
+  - id: block-memory-poisoning
+    when:
+      finding_types: [PERSISTENCE]
+    decision: BLOCK
+    actions: [prevent_memory_write, quarantine_content, log_security_event]
+    reason_code: PERSISTENCE
+  - id: review-system-extraction
+    when:
+      finding_types: [SYSTEM_SECRET_EXTRACTION]
+    decision: REVIEW
+    actions: [require_human_review, redact_sensitive_excerpt, log_security_event]
+    reason_code: SYSTEM_SECRET_EXTRACTION
+  - id: review-direct-injection
+    when:
+      finding_types: [DIRECT_PROMPT_INJECTION]
+    decision: REVIEW
+    actions: [require_human_review, log_security_event]
+    reason_code: DIRECT_PROMPT_INJECTION
+  - id: review-tool-execution
+    when:
+      finding_types: [TOOL_EXECUTION]
+    decision: REVIEW
+    actions: [require_human_review, log_security_event]
+    reason_code: TOOL_EXECUTION
+  - id: review-resource-access
+    when:
+      finding_types: [PATH_ACCESS, METADATA_ACCESS, SUSPICIOUS_URL_DESTINATION]
+    decision: REVIEW
+    actions: [require_human_review, log_security_event]
+    reason_code: SENSITIVE_RESOURCE_ACCESS
+default:
+  decision: ALLOW
+  actions: [allow]
+  reason_code: NO_SECURITY_FINDINGS

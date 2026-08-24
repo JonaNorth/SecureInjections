@@ -1,0 +1,35 @@
+schema_version: 1
+id: SI-NETWORK-000005
+name: URL with embedded credentials
+description: A URL contains a username or credential before the host.
+category: suspicious_url
+severity: medium
+confidence: 0.75
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- https://admin:synthetic@example.invalid/private
+regex_patterns:
+- \bhttps?://[^\s/@:]+:[^\s/@]+@[^\s/]+
+literal_patterns: []
+semantic_examples:
+- https://admin:synthetic@example.invalid/private
+negative_examples:
+- A benign discussion of url with embedded credentials defenses.
+tags:
+- url
+- credentials
+references:
+- https://github.com/secureinjections/secureinjections/blob/main/docs/threat-taxonomy.md
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: NET.SSRF
+legacy_id: NET-005
+indicator_strength: moderate

@@ -1,0 +1,36 @@
+schema_version: 1
+id: SI-SQL-000003
+name: Stacked destructive SQL statement
+description: Contains a statement separator followed by a destructive SQL operation.
+category: sql_injection
+severity: critical
+confidence: 0.9
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- ; DROP TABLE users
+regex_patterns:
+- ;\s*(?:drop|truncate|alter|delete)\s+(?:table|database|from)\b
+literal_patterns: []
+semantic_examples:
+- ; DROP TABLE users
+negative_examples:
+- A benign discussion of stacked destructive sql statement defenses.
+tags:
+- sql
+- injection
+- destructive
+references:
+- https://github.com/secureinjections/secureinjections/blob/main/docs/threat-taxonomy.md
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: INJECTION.SQL
+legacy_id: SQL-003
+indicator_strength: critical

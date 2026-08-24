@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "deterministic_benign_fpr_max": 0.02,
+  "combined_benign_fpr_max": 0.03,
+  "critical_attack_recall_min": 0.98,
+  "deterministic_recall_min": 0.98,
+  "mutation_detection_rate_min": 0.97,
+  "deterministic_p95_latency_ms_max": 2.0,
+  "required_test_groups": ["privacy", "feed_verification"]
+}

@@ -1,0 +1,98 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "secureinjections"
+version = "0.5.0rc1"
+description = "Local deterministic security enforcement for LLM and agent boundaries"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "SecureInjections contributors" }]
+keywords = ["security", "prompt-injection", "llm", "agents", "guard-proxy"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Security",
+]
+dependencies = ["PyYAML>=6.0.1"]
+
+[project.optional-dependencies]
+fastapi = ["fastapi>=0.110", "uvicorn>=0.29"]
+flask = ["flask>=3.0"]
+service = ["fastapi>=0.110", "uvicorn>=0.29"]
+semantic = ["numpy>=1.26", "sentence-transformers>=3.0"]
+classifier = ["torch>=2.2", "transformers>=4.40", "safetensors>=0.4"]
+training = [
+  "secureinjections[classifier]",
+]
+feed = ["cryptography>=42.0"]
+test = [
+  "pytest>=8.0",
+  "pytest-benchmark>=4.0",
+  "httpx>=0.27",
+  "fastapi>=0.110",
+  "flask>=3.0",
+  "numpy>=1.26",
+  "cryptography>=42.0",
+]
+dev = [
+  "secureinjections[test]",
+  "ruff>=0.5",
+  "mypy>=1.10",
+  "types-PyYAML>=6.0",
+  "build>=1.2",
+]
+
+[project.scripts]
+secureinjections = "secureinjections.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/secureinjections/secureinjections"
+Issues = "https://github.com/secureinjections/secureinjections/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["secureinjections"]
+exclude = [
+  "/secureinjections/phase3_adaptation.py",
+  "/secureinjections/pilot_human_audit.py",
+]
+
+[tool.hatch.build.targets.wheel.force-include]
+"policies/classifier-evidence-trust-policy.yaml" = "secureinjections/policies/classifier-evidence-trust-policy.yaml"
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "/evaluation",
+  "/dist",
+  "/release",
+  "/corpus",
+  "/scripts",
+  "/secureinjections-rules",
+  "/tests",
+  "/tools",
+  "/docs/archive",
+  "/docs/v0.4.2-*",
+  "/secureinjections/phase3_adaptation.py",
+  "/secureinjections/pilot_human_audit.py",
+  "/examples/**/state/*",
+  "/examples/**/audit/*",
+  "/examples/**/logs/*",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["benchmark: performance-oriented tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

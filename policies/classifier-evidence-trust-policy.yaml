@@ -1,0 +1,27 @@
+schema_version: 1
+policy_id: secureinjections-machine-evidence-v1
+auto_promote:
+  required_review_passes: 2
+  require_binary_label_agreement: true
+  require_classifier_family_agreement: true
+  require_independence_agreement: true
+  require_privacy_accept: true
+  require_usage_rights_accept: true
+  require_provenance_complete: true
+  require_hash_binding: true
+  require_deterministic_leakage_pass: true
+  allow_ambiguous: false
+  allow_unknown_usage_rights: false
+  allow_privacy_uncertain: false
+  allow_reviewer_disagreement: false
+human_queue:
+  label_disagreement: true
+  classifier_family_disagreement: true
+  independence_uncertain: true
+  provenance_uncertain: true
+  usage_rights_uncertain: true
+  privacy_uncertain: true
+  taxonomy_ambiguity: true
+  high_similarity_boundary: true
+near_duplicate_similarity: 0.86
+high_similarity_boundary: 0.72

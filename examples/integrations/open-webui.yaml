@@ -1,0 +1,30 @@
+integration:
+  id: open-webui-integration
+  version: v0.1
+  validated_app: Open WebUI
+  validated_app_version: 0.11.0
+  integration_class: BASE_URL_PLUS_SUPPORTED_SETTINGS
+open_webui:
+  expected_version: 0.11.0
+  host: 127.0.0.1
+  port: 0
+  isolated_data_directory: auto
+  executable: open-webui
+  streaming_required_off: true
+proxy:
+  config: ../secureinjections.proxy.yaml
+  port: 0
+  expected_mode: ENFORCE
+upstream:
+  provider: ollama_openai_compatible_local
+  base_url: http://127.0.0.1:11434/v1
+  model: qwen2.5:7b
+smoke:
+  timeout_seconds: 180
+  startup_behavior: owned_isolated
+  fixtures:
+    - benign-ordinary
+    - benign-quoted-security
+    - adversarial-direct-injection
+    - adversarial-poisoned-tool
+    - downstream-unsafe-tool

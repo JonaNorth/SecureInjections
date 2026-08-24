@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "languages": {
+    "en": {
+      "education": ["\\b(?:explain(?:s|ed|ing)?|describ(?:e|es|ed|ing)|teach|analyse|analyze|discuss|research|paper|lesson|course|tutorial|security training)\\b", "\\b(?:how (?:can|do|does|should)|why (?:is|does|should)|what does)\\b", "\\b(?:defend against|prevent|mitigate|detect|security researchers?|this vulnerability|an example of|the phrase)\\b"],
+      "descriptive": ["\\b(?:the attacker|an attacker|the incident|the report|the paper|researchers?)\\b", "\\b(?:attempted|tried|described|reported|observed|quoted|demonstrated)\\b"],
+      "imperative": ["\\b(?:read|open|load|return|send|upload|extract|fetch|request|run|execute|invoke|call|install|download|ignore|override|replace|store|remember)\\b"]
+    },
+    "da": {
+      "education": ["\\b(?:forklar|beskriv|undervis|analysér|diskutér|forskning|kursus|eksempel|hvordan|hvorfor|forsvar|forebyg|afbød|opdag)\\b"],
+      "descriptive": ["\\b(?:angriberen|en angriber|rapporten|forskere|hændelsen)\\b", "\\b(?:forsøgte|beskrev|rapporterede|citerede)\\b"],
+      "imperative": ["\\b(?:læs|åbn|hent|returner|send|upload|udtræk|kør|udfør|installer|ignorer|erstat|gem|husk)\\b"]
+    },
+    "de": {
+      "education": ["\\b(?:erkläre|beschreibe|lehre|analysiere|diskutiere|forschung|kurs|beispiel|wie|warum|verhindern|schützen|erkennen|mindern)\\b"],
+      "descriptive": ["\\b(?:der angreifer|ein angreifer|der bericht|forscher|der vorfall)\\b", "\\b(?:versuchte|beschrieb|berichtete|zitierte)\\b"],
+      "imperative": ["\\b(?:lies|öffne|lade|gib|sende|extrahiere|hole|führe|starte|installiere|ignoriere|ersetze|speichere)\\b"]
+    },
+    "fr": {
+      "education": ["\\b(?:explique|décris|enseigne|analyse|discute|recherche|cours|exemple|comment|pourquoi|prévenir|défendre|atténuer|détecter|chercheurs?|la phrase)\\b"],
+      "descriptive": ["\\b(?:l['’]attaquant|un attaquant|le rapport|les chercheurs|l['’]incident)\\b", "\\b(?:a tenté|décrivait|signalait|citait|demandait)\\b"],
+      "imperative": ["\\b(?:lis|ouvre|charge|retourne|envoie|téléverse|extrais|récupère|exécute|invoque|installe|ignore|remplace|enregistre)\\b"]
+    },
+    "es": {
+      "education": ["\\b(?:explica|describe|enseña|analiza|discute|investigación|curso|ejemplo|cómo|por qué|prevenir|defender|mitigar|detectar|investigadores?|la frase)\\b"],
+      "descriptive": ["\\b(?:el atacante|un atacante|el informe|los investigadores|el incidente)\\b", "\\b(?:intentó|describió|informó|citó)\\b"],
+      "imperative": ["\\b(?:lee|abre|carga|devuelve|envía|sube|extrae|obtén|ejecuta|invoca|instala|ignora|reemplaza|guarda)\\b"]
+    },
+    "sv": {
+      "education": ["\\b(?:förklara|beskriv|undervisa|analysera|diskutera|forskning|kurs|exempel|hur|varför|förhindra|försvara|mildra|upptäcka)\\b"],
+      "descriptive": ["\\b(?:angriparen|en angripare|rapporten|forskarna|incidenten)\\b", "\\b(?:försökte|beskrev|rapporterade|citerade)\\b"],
+      "imperative": ["\\b(?:läs|öppna|hämta|returnera|skicka|ladda upp|extrahera|kör|anropa|installera|ignorera|ersätt|spara)\\b"]
+    },
+    "no": {
+      "education": ["\\b(?:forklar|beskriv|undervis|analyser|diskuter|forskning|kurs|eksempel|hvordan|hvorfor|forhindre|forsvare|dempe|oppdage)\\b"],
+      "descriptive": ["\\b(?:angriperen|en angriper|rapporten|forskerne|hendelsen)\\b", "\\b(?:forsøkte|beskrev|rapporterte|siterte)\\b"],
+      "imperative": ["\\b(?:les|åpne|hent|returner|send|last opp|trekk ut|kjør|kall|installer|ignorer|erstatt|lagre)\\b"]
+    },
+    "nl": {
+      "education": ["\\b(?:leg uit|beschrijf|onderwijs|analyseer|bespreek|onderzoek|cursus|voorbeeld|hoe|waarom|voorkom|verdedig|beperk|detecteer)\\b"],
+      "descriptive": ["\\b(?:de aanvaller|een aanvaller|het rapport|onderzoekers|het incident)\\b", "\\b(?:probeerde|beschreef|rapporteerde|citeerde)\\b"],
+      "imperative": ["\\b(?:lees|open|laad|retourneer|stuur|upload|haal|voer|roep|installeer|negeer|vervang|bewaar)\\b"]
+    },
+    "it": {
+      "education": ["\\b(?:spiega|descrivi|insegna|analizza|discuti|ricerca|corso|esempio|come|perché|prevenire|difendere|mitigare|rilevare|ricercatori?|la frase)\\b"],
+      "descriptive": ["\\b(?:l['’]attaccante|un attaccante|il rapporto|i ricercatori|l['’]incidente)\\b", "\\b(?:ha tentato|descriveva|segnalava|citava)\\b"],
+      "imperative": ["\\b(?:leggi|apri|carica|restituisci|invia|estrai|recupera|esegui|invoca|installa|ignora|sostituisci|salva)\\b"]
+    },
+    "pt": {
+      "education": ["\\b(?:explique|descreva|ensine|analise|discuta|pesquisa|curso|exemplo|como|por que|prevenir|defender|mitigar|detectar|pesquisadores?|a frase)\\b"],
+      "descriptive": ["\\b(?:o atacante|um atacante|o relatório|os pesquisadores|o incidente)\\b", "\\b(?:tentou|descreveu|relatou|citou)\\b"],
+      "imperative": ["\\b(?:leia|abra|carregue|retorne|envie|extraia|busque|execute|invoque|instale|ignore|substitua|salve)\\b"]
+    },
+    "pl": {
+      "education": ["\\b(?:wyjaśnij|opisz|naucz|przeanalizuj|omów|badanie|kurs|przykład|jak|dlaczego|zapobiegać|bronić|łagodzić|wykrywać|badacze|fraza)\\b"],
+      "descriptive": ["\\b(?:atakujący|napastnik|raport|badacze|incydent)\\b", "\\b(?:próbował|opisał|zgłosił|zacytował)\\b"],
+      "imperative": ["\\b(?:przeczytaj|otwórz|załaduj|zwróć|wyślij|prześlij|wyodrębnij|pobierz|uruchom|wywołaj|zainstaluj|zignoruj|zastąp|zapisz)\\b"]
+    }
+  }
+}

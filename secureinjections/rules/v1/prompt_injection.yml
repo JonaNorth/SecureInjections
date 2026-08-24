@@ -1,0 +1,61 @@
+version: 1
+rules:
+  - id: PI-001
+    name: Ignore previous instructions
+    category: prompt_injection
+    description: Attempts to discard or supersede prior instruction context.
+    severity: high
+    patterns:
+      - '\b(?:ignore|disregard|forget|override)\s+(?:all\s+)?(?:previous|prior|above|earlier)\s+(?:instructions?|prompts?|rules?|messages?)\b'
+      - '\bdo\s+not\s+follow\s+(?:the\s+)?(?:previous|system|developer)\s+(?:instructions?|prompt)\b'
+      - '\bignora\s+(?:todas\s+)?las\s+instrucciones\s+anteriores\b'
+      - '\bignorez\s+(?:toutes\s+)?les\s+instructions\s+précédentes\b'
+      - '\bignorer\s+(?:alle\s+)?tidligere\s+instruktioner\b'
+    tags: [prompt-injection, instruction-hierarchy]
+    references: [https://owasp.org/www-project-top-10-for-large-language-model-applications/]
+    enabled: true
+  - id: PI-002
+    name: System or developer prompt impersonation
+    category: prompt_injection
+    description: Uses role labels or instruction markers associated with privileged prompts.
+    severity: high
+    patterns:
+      - '(?:^|[\r\n])\s*(?:system|developer)\s*(?:message)?\s*:'
+      - '<\s*(?:system|developer|instructions?)\s*>'
+      - '\[\s*(?:system|developer)\s*(?:message)?\s*\]'
+    tags: [prompt-injection, role-spoofing]
+    references: []
+    enabled: true
+  - id: PI-003
+    name: Prompt or policy extraction
+    category: prompt_injection
+    description: Requests disclosure of hidden prompts, policies, or instructions.
+    severity: high
+    patterns:
+      - '\b(?:reveal|show|print|repeat|return|expose)\s+(?:me\s+)?(?:your\s+|the\s+)?(?:hidden\s+|original\s+|system\s+|developer\s+)?(?:prompt|instructions?|policy|policies)\b'
+      - '\bwhat\s+(?:are|were)\s+your\s+(?:system\s+)?instructions\b'
+    tags: [prompt-injection, prompt-extraction]
+    references: []
+    enabled: true
+  - id: PI-004
+    name: Safety bypass or unrestricted mode
+    category: prompt_injection
+    description: Attempts to activate an unrestricted persona or disable safeguards.
+    severity: high
+    patterns:
+      - '\b(?:developer|god|sudo|jailbreak|unrestricted)\s+mode\b'
+      - '\b(?:bypass|disable|remove|circumvent)\s+(?:all\s+)?(?:safety|guardrails?|filters?|restrictions?|policies)\b'
+      - '\bDAN\s+(?:mode|prompt)\b'
+    tags: [prompt-injection, jailbreak]
+    references: []
+    enabled: true
+  - id: PI-005
+    name: Obfuscated instruction override
+    category: prompt_injection
+    description: Detects separator-obfuscated attempts to ignore instructions.
+    severity: high
+    patterns:
+      - 'i(?!gnore)[\W_]*g[\W_]*n[\W_]*o[\W_]*r[\W_]*e.{0,24}i[\W_]*n[\W_]*s[\W_]*t[\W_]*r[\W_]*u[\W_]*c[\W_]*t[\W_]*i[\W_]*o[\W_]*n'
+    tags: [prompt-injection, obfuscation]
+    references: []
+    enabled: true

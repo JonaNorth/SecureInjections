@@ -1,0 +1,41 @@
+profile:
+  id: openai-compatible-local-profile
+  version: v0.1
+
+runtime:
+  provider: openai_compatible_local
+  base_url: http://127.0.0.1:1234/v1
+  model: local-model
+  timeout_seconds: 180
+  max_response_bytes: 2000000
+
+guard:
+  policy: default
+  dry_run: false
+  audit: local-agent-demo/state/openai-compatible-guard-audit.jsonl
+
+agent:
+  max_turns: 6
+  max_tool_calls: 3
+  model_response_limit: 65536
+  retrieved_content_limit: 64000
+  tool_output_limit: 64000
+
+tools:
+  enabled:
+    - calculator
+    - workspace_reader
+    - document_retriever
+  workspace_root: local-agent-demo/workspace
+  retrieval_root: local-agent-demo/retrieval
+
+memory:
+  enabled: true
+  storage_location: local-agent-demo/state/openai-compatible-memory.jsonl
+
+external:
+  enabled: true
+  simulated_only: true
+
+privacy:
+  raw_content_logging: false

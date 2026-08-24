@@ -1,0 +1,234 @@
+{
+  "schema_version": 2,
+  "signals": {
+    "override_verb": [
+      "\\b(?:ignore|disregard|forget|override|replace|supersede|bypass|abandon)\\b",
+      "\\b(?:set|put|leave|cast)\\s+aside\\b",
+      "\\b(?:ignoriere|ersetze|ignora|reemplaza|ignore|abandonne|remplace|ignorer|tilsidesæt|sostituisci|negeer|vervang)\\b"
+    ],
+    "privileged_instruction_target": [
+      "\\b(?:instructions?|directives?|rules?|polic(?:y|ies)|constraints?|restrictions?|guidance|guardrails?|control messages?)\\b",
+      "\\b(?:administrator|system|developer|operator|platform owner|system owner)\\b",
+      "\\b(?:anweisungen|regeln|administrators?|instrucciones|reglas|administrador|instructions|politique|agent|instruktioner|politikker|amministratore|istruzioni|regels|beleid)\\b"
+    ],
+    "disclosure_action": [
+      "\\b(?:reveal|display|show|print|output|return|repeat|reproduce|expose|disclose|provide|dump|include)\\b",
+      "\\b(?:zeige|mostrar|devuelve|révèle|montre|returner|vis|mostra|toon)\\b"
+    ],
+    "protected_configuration_target": [
+      "\\b(?:hidden|concealed|protected|private|secret|internal)\\b.{0,48}\\b(?:prompt|instructions?|polic(?:y|ies)|configuration|config|setup|startup|initiali[sz]ation|system message|directions?)\\b",
+      "\\b(?:system prompt|developer prompt|startup instructions?|initialization instructions?|hidden configuration)\\b",
+      "\\b(?:verborgenen?|ocult[ao]s?|cachée?s?|skjulte?|nascost[ae]?|geheime?)\\b.{0,48}\\b(?:anweisungen|instrucciones|configuration|konfiguration|instruktioner|configurazione|configuratie)\\b"
+    ],
+    "access_action": [
+      "\\b(?:read|open|inspect|examine|enumerate|access|collect|retrieve|fetch|query|obtain|load|look for|search for)\\b",
+      "\\b(?:prüfe|untersuche|examina|busca|inspecte|récupère|hent|undersøg|esamina|recupera|onderzoek|haal)\\b"
+    ],
+    "secret_target": [
+      "\\b(?:credentials?|secrets?|tokens?|passwords?|api keys?|private keys?|authentication material|access keys?)\\b",
+      "\\b(?:environment|process)\\s+(?:variables?|configuration|environment)\\b",
+      "\\b(?:credentials?|credenciales|identifiants|legitimationsoplysninger|credenziali|inloggegevens)\\b"
+    ],
+    "sensitive_file_target": [
+      "(?:/etc/(?:passwd|shadow)|~/\\.ssh|\\.aws/credentials|\\.env\\b|/proc/(?:self|[0-9]+)/environ|\\.ssh/(?:id_rsa|id_ed25519)|\\.kube/config|\\.config/gcloud)",
+      "\\b(?:credential|password|private[- ]key|secret|authentication)[- ]?(?:file|store|database|material)\\b"
+    ],
+    "send_action": [
+      "\\b(?:send|post|upload|transmit|forward|exfiltrate|paste|publish|deliver)\\b",
+      "\\b(?:include|place|put)\\b.{0,32}\\b(?:response|reply|answer|tool call|outgoing)\\b",
+      "\\b(?:envía|devuelve|transmets|envoie|send|returner|invia|stuur)\\b"
+    ],
+    "metadata_target": [
+      "\\b(?:instance|cloud|internal|machine|hosting)\\s+(?:identity|metadata)\\s+(?:service|endpoint)?\\b",
+      "\\bmetadata\\s+(?:service|endpoint)\\b",
+      "169\\.254\\.169\\.254|metadata\\.google\\.internal"
+    ],
+    "tool_action": [
+      "\\b(?:run|execute|invoke|launch|call|install|use|download|open|read|fetch|request|send|upload|activate)\\b"
+    ],
+    "package_target": [
+      "\\b(?:package manager|system installer|dependency installer|pip|npm|yarn|pnpm|cargo|gem|bundler|apt(?:-get)?|apk|dnf|yum|brew)\\b",
+      "\\b(?:install|add)\\b.{0,32}\\b(?:package|module|dependency|library)\\b",
+      "\\b(?:package|module|dependency|library|installer)\\b"
+    ],
+    "shell_target": [
+      "\\b(?:shell|command interpreter|bash|zsh|cmd(?:\\.exe)?|powershell|sh\\s+-c|printenv|set)\\b"
+    ],
+    "persistence_action": [
+      "\\b(?:store|save|persist|preserve|write|record|retain|embed|leave)\\b"
+    ],
+    "future_agent_target": [
+      "\\b(?:next|future|another|downstream|reviewing|different)\\s+(?:ai|agent|assistant|model|automated worker|processor)\\b",
+      "\\b(?:when|once)\\s+(?:the|another|an?)\\s+(?:ai|agent|assistant|model|processor)\\s+(?:reads?|processes?|sees?|reviews?)\\b",
+      "\\b(?:log reader|log processor|document processor|reviewing ai|reviewing assistant|next agent)\\b",
+      "\\b(?:whoever|whichever)\\b.{0,48}\\b(?:reads?|reviews?|processes?|consumes?|handles?)\\b",
+      "\\b(?:prochain agent|nächsten agent|siguiente agente|næste agent|prossimo agente|volgende agent)\\b"
+    ],
+    "instruction_noun": [
+      "\\b(?:instruction|direction|directive|command|request|message|note)\\b"
+    ],
+    "execution_phrase": [
+      "\\b(?:execute|carry out|follow|obey|comply with|act on|treat as controlling|must|should|required to)\\b"
+    ],
+    "untrusted_container": [
+      "\\b(?:log|support ticket|ticket|email|retrieved document|web content|database value|tool output|record|audit entry)\\b"
+    ],
+    "execution_payload": [
+      "\\b(?:tool|function|command|script|program|binary|executable|installer|terminal|console|runtime|workflow|operation)\\b",
+      "\\b(?:shell command|system command|tool call|function call|downloaded (?:file|script|payload))\\b"
+    ],
+    "agent_target": [
+      "\\b(?:agent|assistant|model|automation|automated worker|workflow|tool runner|document processor|log analyzer|reviewer)\\b"
+    ],
+    "untrusted_package": [
+      "\\b(?:unknown|unverified|untrusted|unsigned|unapproved|external|third[- ]party|arbitrary|new)\\b.{0,48}\\b(?:package|module|dependency|library|installer)\\b",
+      "\\b(?:package|module|dependency|library|installer)\\b.{0,48}\\b(?:unknown|unverified|untrusted|unsigned|unapproved|external|third[- ]party|arbitrary)\\b"
+    ],
+    "network_retrieval": [
+      "\\b(?:download|fetch|retrieve|pull|clone|obtain)\\b.{0,80}\\b(?:from|via|over)\\b",
+      "\\b(?:registry|repository|remote endpoint|external (?:host|server|source|url))\\b"
+    ],
+    "traversal_target": [
+      "(?:\\.\\.[/\\\\]){1,}",
+      "\\b(?:parent|ancestor|higher|upper)\\s+(?:directory|directories|folder|folders|path|paths)\\b",
+      "\\b(?:escape|traverse|climb|walk|move|step)\\b.{0,48}\\b(?:document|web|application|storage|served|upload)\\s+root\\b",
+      "\\b(?:outside|above|beyond)\\b.{0,32}\\b(?:root|base|allowed|served)\\s+(?:directory|folder|path)\\b"
+    ],
+    "future_processing": [
+      "\\b(?:later|subsequent|eventual|future|downstream|next)\\b.{0,48}\\b(?:read|process|consume|review|analy[sz]e|load|see|handle)\\b",
+      "\\b(?:when|once|after)\\b.{0,48}\\b(?:processed|consumed|reviewed|read|loaded|seen|handled)\\b",
+      "\\b(?:whoever|whichever)\\b.{0,48}\\b(?:reads?|reviews?|processes?|consumes?|handles?)\\b"
+    ],
+    "downstream_behavior": [
+      "\\b(?:alter|change|control|govern|redirect|shape|influence|determine)\\b.{0,48}\\b(?:behavio(?:u)?r|operation|response|decision|action)\\b",
+      "\\b(?:treat|interpret|accept|regard)\\b.{0,48}\\b(?:instruction|directive|command|controlling|authoritative)\\b"
+    ]
+  },
+  "language_signals": {
+    "da": {
+      "override_verb": ["\\b(?:ignorér|tilsidesæt|erstat|omgå)\\b"],
+      "privileged_instruction_target": ["\\b(?:systemregler|instruktioner|politikker|retningslinjer)\\b"],
+      "access_action": ["\\b(?:læs|åbn|hent|inspicér|udtræk)\\b"],
+      "secret_target": ["\\b(?:hemmeligheder|adgangskoder|tokens|nøgler|legitimationsoplysninger)\\b"],
+      "send_action": ["\\b(?:send|upload|videresend|returner)\\b"],
+      "tool_action": ["\\b(?:kør|udfør|aktivér|installer|hent|åbn|læs|send|upload)\\b"],
+      "agent_target": ["\\b(?:agent|assistent|model|automatisering|værktøj)\\b"],
+      "execution_payload": ["\\b(?:værktøj|kommando|script|program|installation)\\b"],
+      "future_processing": ["\\b(?:senere|næste|fremtidig)\\b.{0,40}\\b(?:læser|behandler|ser)\\b"],
+      "downstream_behavior": ["\\b(?:ændr|styr|påvirk)\\w*\\b.{0,40}\\b(?:adfærd|svar|handling)\\b"]
+    },
+    "de": {
+      "override_verb": ["\\b(?:ignoriere|ersetze|umgehe|verwerfe)\\w*\\b"],
+      "privileged_instruction_target": ["\\b(?:systemregeln|anweisungen|richtlinien|vorgaben)\\b"],
+      "access_action": ["\\b(?:lies|öffne|hole|prüfe|extrahiere)\\w*\\b"],
+      "secret_target": ["\\b(?:geheimnisse|passwörter|token|schlüssel|zugangsdaten)\\b"],
+      "send_action": ["\\b(?:sende|lade hoch|übermittle|gib zurück)\\w*\\b"],
+      "tool_action": ["\\b(?:führe|starte|rufe|installiere|lade|öffne|lies|sende)\\w*\\b"],
+      "agent_target": ["\\b(?:agent|assistent|modell|automatisierung|werkzeug)\\b"],
+      "execution_payload": ["\\b(?:werkzeug|befehl|skript|programm|installation)\\b"],
+      "future_processing": ["\\b(?:später|nächste[rs]?|zukünftige[rs]?)\\b.{0,40}\\b(?:liest|verarbeitet|sieht)\\b"],
+      "downstream_behavior": ["\\b(?:ändere|steuere|beeinflusse)\\w*\\b.{0,40}\\b(?:verhalten|antwort|aktion)\\b"]
+    },
+    "fr": {
+      "override_verb": ["\\b(?:ignore|remplace|contourne|abandonne)\\b"],
+      "privileged_instruction_target": ["\\b(?:règles système|instructions|politique|directives)\\b"],
+      "access_action": ["\\b(?:lis|ouvre|charge|inspecte|extrais|récupère)\\b"],
+      "secret_target": ["\\b(?:secrets|mots de passe|jetons|clés|identifiants)\\b"],
+      "send_action": ["\\b(?:envoie|téléverse|transmets|retourne)\\b"],
+      "tool_action": ["\\b(?:exécute|lance|invoque|installe|télécharge|ouvre|lis|récupère|envoie|téléverse)\\b"],
+      "agent_target": ["\\b(?:agent|assistant|modèle|automatisation|outil|analyseur)\\b"],
+      "execution_payload": ["\\b(?:outil|commande|script|programme|installation)\\b"],
+      "future_processing": ["\\b(?:plus tard|prochain|futur|ultérieur)\\b.{0,48}\\b(?:lira|traitera|verra|analysera)\\b"],
+      "downstream_behavior": ["\\b(?:modifie|contrôle|influence)\\b.{0,40}\\b(?:comportement|réponse|action)\\b"]
+    },
+    "es": {
+      "override_verb": ["\\b(?:ignora|reemplaza|elude|abandona)\\b"],
+      "privileged_instruction_target": ["\\b(?:reglas del sistema|instrucciones|política|directivas)\\b"],
+      "access_action": ["\\b(?:lee|abre|carga|inspecciona|extrae|obtén)\\b"],
+      "secret_target": ["\\b(?:secretos|contraseñas|tokens|claves|credenciales)\\b"],
+      "send_action": ["\\b(?:envía|sube|transmite|devuelve)\\b"],
+      "tool_action": ["\\b(?:ejecuta|lanza|invoca|instala|descarga|abre|lee|obtén|envía|sube)\\b"],
+      "agent_target": ["\\b(?:agente|asistente|modelo|automatización|herramienta)\\b"],
+      "execution_payload": ["\\b(?:herramienta|comando|script|programa|instalación)\\b"],
+      "future_processing": ["\\b(?:más tarde|siguiente|futuro)\\b.{0,48}\\b(?:lea|procese|vea|analice)\\b"],
+      "downstream_behavior": ["\\b(?:cambia|controla|influye)\\b.{0,40}\\b(?:comportamiento|respuesta|acción)\\b"]
+    },
+    "sv": {
+      "override_verb": ["\\b(?:ignorera|ersätt|kringgå|överge)\\b"],
+      "privileged_instruction_target": ["\\b(?:systemregler|instruktioner|policy|riktlinjer)\\b"],
+      "access_action": ["\\b(?:läs|öppna|hämta|inspektera|extrahera)\\b"],
+      "secret_target": ["\\b(?:hemligheter|hemliga miljövariabler|lösenord|token|nycklar|autentiseringsuppgifter)\\w*\\b"],
+      "send_action": ["\\b(?:skicka|ladda upp|överför|returnera)\\b"],
+      "tool_action": ["\\b(?:kör|utför|anropa|installera|ladda ner|öppna|läs|hämta|skicka)\\b"],
+      "agent_target": ["\\b(?:agent|assistent|modell|automatisering|verktyg)\\b"],
+      "execution_payload": ["\\b(?:verktyg(?:et)?|kommando|skript|program|installation)\\b"],
+      "future_processing": ["\\b(?:senare|nästa|framtida)\\b.{0,40}\\b(?:läser|behandlar|ser)\\b"],
+      "downstream_behavior": ["\\b(?:ändra|styra|påverka)\\b.{0,40}\\b(?:beteende|svar|handling)\\b"]
+    },
+    "no": {
+      "override_verb": ["\\b(?:ignorer|erstatt|omgå|forlat)\\b"],
+      "privileged_instruction_target": ["\\b(?:systemregler|instruksjoner|policy|retningslinjer)\\b"],
+      "access_action": ["\\b(?:les|åpne|hent|inspiser|trekk ut)\\b"],
+      "secret_target": ["\\b(?:hemmeligheter|passord|token|nøkler|legitimasjon)\\b"],
+      "send_action": ["\\b(?:send|last opp|overfør|returner)\\b"],
+      "tool_action": ["\\b(?:kjør|utfør|kall|installer|last ned|åpne|les|hent|send)\\b"],
+      "agent_target": ["\\b(?:agent|assistent|modell|automatisering|verktøy)\\b"],
+      "execution_payload": ["\\b(?:verktøy|kommando|skript|program|installasjon)\\b"],
+      "future_processing": ["\\b(?:senere|neste|framtidig)\\b.{0,40}\\b(?:leser|behandler|ser)\\b"],
+      "downstream_behavior": ["\\b(?:endre|styre|påvirke)\\b.{0,40}\\b(?:atferd|svar|handling)\\b"]
+    },
+    "nl": {
+      "override_verb": ["\\b(?:negeer|vervang|omzeil|verlaat)\\w*\\b"],
+      "privileged_instruction_target": ["\\b(?:systeemregels|instructies|beleid|richtlijnen)\\b"],
+      "access_action": ["\\b(?:lees|open|laad|inspecteer|haal|extraheer)\\w*\\b"],
+      "secret_target": ["\\b(?:geheimen|wachtwoorden|tokens|sleutels|inloggegevens)\\b"],
+      "send_action": ["\\b(?:stuur|upload|verzend|retourneer)\\w*\\b"],
+      "tool_action": ["\\b(?:voer|start|roep|installeer|download|open|lees|haal|stuur|upload)\\w*\\b"],
+      "agent_target": ["\\b(?:agent|assistent|model|automatisering|hulpmiddel)\\b"],
+      "execution_payload": ["\\b(?:hulpmiddel|commando|script|programma|installatie)\\b"],
+      "future_processing": ["\\b(?:later|volgende|toekomstige)\\b.{0,40}\\b(?:leest|verwerkt|ziet)\\b"],
+      "downstream_behavior": ["\\b(?:verander|stuur|beïnvloed)\\w*\\b.{0,40}\\b(?:gedrag|antwoord|actie)\\b"]
+    },
+    "it": {
+      "override_verb": ["\\b(?:ignora|sostituisci|aggira|abbandona)\\b"],
+      "privileged_instruction_target": ["\\b(?:regole di sistema|istruzioni|politica|direttive)\\b"],
+      "access_action": ["\\b(?:leggi|apri|carica|ispeziona|estrai|recupera)\\b"],
+      "secret_target": ["\\b(?:segreti|password|token|chiavi|credenziali)\\b"],
+      "send_action": ["\\b(?:invia|carica|trasmetti|restituisci)\\b"],
+      "tool_action": ["\\b(?:esegui|avvia|invoca|installa|scarica|apri|leggi|recupera|invia|carica)\\b"],
+      "agent_target": ["\\b(?:agente|assistente|modello|automazione|strumento)\\b"],
+      "execution_payload": ["\\b(?:strumento|comando|script|programma|installazione)\\b"],
+      "future_processing": ["\\b(?:più tardi|prossimo|futuro)\\b.{0,48}\\b(?:leggerà|elaborerà|vedrà|analizzerà)\\b"],
+      "downstream_behavior": ["\\b(?:modifica|controlla|influenza)\\b.{0,40}\\b(?:comportamento|risposta|azione)\\b"]
+    },
+    "pt": {
+      "override_verb": ["\\b(?:ignore|substitua|contorne|abandone)\\b"],
+      "privileged_instruction_target": ["\\b(?:regras do sistema|instruções|política|diretivas)\\b"],
+      "access_action": ["\\b(?:leia|abra|carregue|inspecione|extraia|busque)\\b"],
+      "secret_target": ["\\b(?:segredos|senhas|tokens|chaves|credenciais)\\b"],
+      "send_action": ["\\b(?:envie|carregue|transmita|retorne)\\b"],
+      "tool_action": ["\\b(?:execute|inicie|invoque|instale|baixe|abra|leia|busque|envie|carregue)\\b"],
+      "agent_target": ["\\b(?:agente|assistente|modelo|automação|ferramenta)\\b"],
+      "execution_payload": ["\\b(?:ferramenta|comando|script|programa|instalação)\\b"],
+      "future_processing": ["\\b(?:mais tarde|próximo|futuro)\\b.{0,48}\\b(?:lerá|processará|verá|analisará)\\b"],
+      "downstream_behavior": ["\\b(?:mude|controle|influencie)\\b.{0,40}\\b(?:comportamento|resposta|ação)\\b"]
+    },
+    "pl": {
+      "override_verb": ["\\b(?:zignoruj|zastąp|omiń|porzuć)\\b"],
+      "privileged_instruction_target": ["\\b(?:reguły systemowe|instrukcje|politykę|dyrektywy)\\b"],
+      "access_action": ["\\b(?:przeczytaj|otwórz|załaduj|sprawdź|wyodrębnij|pobierz)\\b"],
+      "secret_target": ["\\b(?:sekrety|hasła|tokeny|klucze|poświadczenia)\\b"],
+      "send_action": ["\\b(?:wyślij|prześlij|zwróć)\\b"],
+      "tool_action": ["\\b(?:uruchom|wykonaj|wywołaj|zainstaluj|pobierz|otwórz|przeczytaj|wyślij)\\b"],
+      "agent_target": ["\\b(?:agent|asystent|model|automatyzacja|narzędzie)\\b"],
+      "execution_payload": ["\\b(?:narzędzie|polecenie|skrypt|program|instalacja)\\b"],
+      "future_processing": ["\\b(?:później|następny|przyszły)\\b.{0,48}\\b(?:przeczyta|przetworzy|zobaczy|przeanalizuje)\\b"],
+      "downstream_behavior": ["\\b(?:zmień|kontroluj|wpłyń)\\b.{0,40}\\b(?:zachowanie|odpowiedź|działanie)\\b"]
+    },
+    "en": {
+      "tool_action": ["\\b(?:perform|operate|trigger|dispatch)\\b"],
+      "future_agent_target": ["\\b(?:whoever|whichever)\\b.{0,32}\\b(?:agent|assistant|model|processor|reviewer)\\b"],
+      "instruction_noun": ["\\b(?:operational|controlling|governing)\\s+(?:note|text|material|content|directions?)\\b"]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+schema_version: 1
+id: SI-SHELL-000002
+name: Destructive or reconnaissance command
+description: Contains a high-risk filesystem or host reconnaissance command sequence.
+category: shell_command
+severity: high
+confidence: 0.9
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- ; whoami
+regex_patterns:
+- (?:^|[;&|`\n])\s*(?:sudo\s+)?(?:rm\s+-[a-z]*r[a-z]*f|chmod\s+[0-7]{3,4}|chown\s+|id\b|whoami\b|uname\s+-a|cat\s+/etc/)
+literal_patterns: []
+semantic_examples:
+- ; whoami
+negative_examples:
+- A benign discussion of destructive or reconnaissance command defenses.
+tags:
+- command
+- shell
+references:
+- https://github.com/secureinjections/secureinjections/blob/main/docs/threat-taxonomy.md
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: EXEC.SHELL
+legacy_id: CMD-002
+indicator_strength: strong
