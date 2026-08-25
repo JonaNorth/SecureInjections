@@ -7,7 +7,7 @@ SecureInjections is a local deterministic security enforcement layer for local L
 workflows. It inspects content at model, tool, memory, and external-action boundaries and applies
 `ALLOW`, `REVIEW`, or `BLOCK` before protected traffic or side effects proceed.
 
-The v0.5.0-rc1 product path is local and loopback-only. No production ML classifier is required.
+The v0.5.0-rc2 product path is local and loopback-only. No production ML classifier is required.
 The primary integration is an OpenAI-compatible Guard Proxy, validated with Open WebUI 0.11.0,
 local Ollama, and `qwen2.5:7b`.
 
@@ -52,7 +52,7 @@ uv build
 uv venv --python 3.11 .venv
 source .venv/bin/activate
 uv pip install --python .venv/bin/python \
-  dist/secureinjections-0.5.0rc1-py3-none-any.whl
+  dist/secureinjections-0.5.0rc2-py3-none-any.whl
 secureinjections --version
 ```
 
@@ -60,14 +60,14 @@ Replace `<repository URL>` with the public repository URL once publication occur
 
 ### From a GitHub release asset
 
-After `v0.5.0-rc1` is published, download the wheel attached to that GitHub release and install
+After `v0.5.0-rc2` is published, download the wheel attached to that GitHub release and install
 the downloaded file directly:
 
 ```bash
 uv venv --python 3.11 .venv
 source .venv/bin/activate
 uv pip install --python .venv/bin/python \
-  /path/to/secureinjections-0.5.0rc1-py3-none-any.whl
+  /path/to/secureinjections-0.5.0rc2-py3-none-any.whl
 secureinjections --version
 ```
 
@@ -168,7 +168,7 @@ Architectural enforcement and best-effort detection are separate claims. Read:
 
 - [Security policy and supported claims](SECURITY.md)
 - [Threat model](docs/threat-model.md)
-- [Release claims matrix](docs/release-claims-v0.5.0-rc1.md)
+- [Release claims matrix](docs/release-claims-v0.5.0-rc2.md)
 - [Configuration reference](docs/configuration.md)
 
 SecureInjections does **not** guarantee universal prompt-injection prevention, protect direct
@@ -226,7 +226,7 @@ mypy secureinjections
 python -m build
 ```
 
-The v0.5.0-rc1 validation summary is in [docs/validation.md](docs/validation.md). Release history
+The v0.5.0-rc2 validation summary is in [docs/validation.md](docs/validation.md). Release history
 and limitations are in [CHANGELOG.md](CHANGELOG.md).
 
 ## Research

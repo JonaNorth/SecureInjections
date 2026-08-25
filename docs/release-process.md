@@ -1,14 +1,14 @@
 # Release process
 
-## Public release candidate v0.5.0-rc1
+## Public release candidate v0.5.0-rc2
 
-The RC uses human-readable version `v0.5.0-rc1` and PEP 440 package version `0.5.0rc1`. Build both
+The RC uses human-readable version `v0.5.0-rc2` and PEP 440 package version `0.5.0rc2`. Build both
 wheel and sdist, audit both archives locally, install the wheel into a fresh Python 3.11
 environment, and execute commands from outside the source checkout. PyPI publication is not
 assumed or performed by release preparation.
 
 Required RC blockers are listed in
-[`release-blockers-v0.5.0-rc1.md`](release-blockers-v0.5.0-rc1.md). The release manifest must record
+[`release-blockers-v0.5.0-rc2.md`](release-blockers-v0.5.0-rc2.md). The release manifest must record
 the actual Git HEAD as a base identifier, dirty state honestly, and exact artifact hashes. No
 commit, tag, or publication occurs without explicit human approval.
 

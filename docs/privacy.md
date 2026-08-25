@@ -3,7 +3,7 @@
 ## Validated Guard, Gateway, and proxy defaults
 
 Raw prompt logging, raw model-response logging, and raw tool-argument logging are off in the
-validated v0.5.0-rc1 path. Guard and proxy audit retains bounded metadata: timestamps,
+validated v0.5.0-rc2 path. Guard and proxy audit retains bounded metadata: timestamps,
 source/destination types, decisions, reason and finding codes, correlation IDs, normalized
 content/request/response hashes, profile/policy hashes, upstream-dispatch state, timings, and
 record hashes. It does not retain blocked excerpts, API credentials, or client request IDs.

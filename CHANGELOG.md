@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.5.0-rc2 — 2026-08-25
+
+RC1 was the first clean public-source candidate. No GitHub Release, release assets, or Python
+package publication occurred for rc1. Its public GitHub Actions run failed because the inherited
+full-development workflow expected private tests, tools, and corpus inputs that were intentionally
+excluded from the public source boundary.
+
+RC2 replaces that workflow with repository-only public-source CI and excludes `.github/**` from
+package artifacts. Guard, Gateway, proxy, policy, integration, and security behavior is unchanged.
+
 ## v0.5.0-rc1 — 2026-08-24
 
 First public-facing release candidate for the local deterministic enforcement product track.

@@ -17,7 +17,7 @@ is enabled.
 
 ## Supported security claims
 
-SecureInjections v0.5.0-rc1 is a release candidate. Its validated product path is local,
+SecureInjections v0.5.0-rc2 is a release candidate. Its validated product path is local,
 loopback-only, non-streaming, deterministic-first enforcement for instrumented LLM and agent
 boundaries. Detection and enforcement are distinct.
 
@@ -80,4 +80,4 @@ and remote code are disabled.
 Application owners remain responsible for authentication, authorization, sandboxing,
 parameterized queries, output encoding, least privilege, secret management, egress controls,
 dependency security, and safe logging. See the [threat model](docs/threat-model.md) and
-[release claims matrix](docs/release-claims-v0.5.0-rc1.md).
+[release claims matrix](docs/release-claims-v0.5.0-rc2.md).

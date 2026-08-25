@@ -1,6 +1,6 @@
 # Network behavior
 
-Under the validated v0.5.0-rc1 profiles, runtime inference traffic is local:
+Under the validated v0.5.0-rc2 profiles, runtime inference traffic is local:
 
 - applications connect to the Guard Proxy over loopback;
 - the proxy connects to a local model server over loopback;

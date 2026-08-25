@@ -1,0 +1,46 @@
+name: Public Source CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  public-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install public development dependencies
+        run: python -m pip install --upgrade pip && python -m pip install . ruff build
+      - name: Import public package
+        run: python -c "import secureinjections; from secureinjections.guard import Guard; assert Guard().detector_count > 0"
+      - name: Validate bundled canonical rules
+        run: secureinjections rules quality-gate --path secureinjections/rules/canonical
+      - name: Compile public Python source
+        run: python -m compileall -q secureinjections
+      - name: Lint public Python source
+        run: ruff check secureinjections
+      - name: Check public Python formatting
+        run: ruff format --check secureinjections
+      - name: Build outside the source tree
+        run: python -m build --outdir "$RUNNER_TEMP/dist"
+      - name: Smoke-test the installed wheel
+        shell: bash
+        run: |
+          python -m venv "$RUNNER_TEMP/wheel-smoke"
+          wheel=$(find "$RUNNER_TEMP/dist" -maxdepth 1 -name '*.whl' -print -quit)
+          "$RUNNER_TEMP/wheel-smoke/bin/pip" install "$wheel"
+          mkdir -p "$RUNNER_TEMP/smoke-workspace"
+          printf 'ordinary notes\n' > "$RUNNER_TEMP/smoke-workspace/notes.txt"
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/wheel-smoke/bin/python" -c "from secureinjections.guard import Guard; from secureinjections.gateway import GuardedToolGateway; from secureinjections.local_agent import OllamaAgentAdapter, OpenAICompatibleLocalAgentAdapter; from secureinjections.guard_proxy import GuardProxyEngine; from secureinjections.integrations.open_webui import integration_status; assert Guard().detector_count > 0"
+          "$RUNNER_TEMP/wheel-smoke/bin/secureinjections" guard inspect --source user --destination model --text hello --json
+          "$RUNNER_TEMP/wheel-smoke/bin/secureinjections" guard evaluate-integration --workspace-root "$RUNNER_TEMP/smoke-workspace" --output "$RUNNER_TEMP/gateway.json"
+          "$RUNNER_TEMP/wheel-smoke/bin/secureinjections" guard evaluate-proxy --config "$GITHUB_WORKSPACE/examples/secureinjections.proxy.yaml" --output "$RUNNER_TEMP/proxy.json"
+          "$RUNNER_TEMP/wheel-smoke/bin/secureinjections" integrations list --json
+          "$RUNNER_TEMP/wheel-smoke/bin/secureinjections" integrations open-webui status --json

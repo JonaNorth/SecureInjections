@@ -1,4 +1,4 @@
-# v0.5.0-rc1 validation summary
+# v0.5.0-rc2 validation summary
 
 These are finite curated engineering evaluations. They are not proof of universal attack
 prevention and do not replace deployment-specific testing.

@@ -1,6 +1,6 @@
 # Third-party components
 
-SecureInjections v0.5.0-rc1 is Apache-2.0 licensed. Its only required runtime dependency is
+SecureInjections v0.5.0-rc2 is Apache-2.0 licensed. Its only required runtime dependency is
 PyYAML, whose installed metadata declares the MIT License.
 
 Open WebUI, Ollama, and `qwen2.5:7b` are separate prerequisites used in local validation. They are
