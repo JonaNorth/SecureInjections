@@ -1,5 +1,29 @@
 """Guarded local agent/tool gateway public API."""
 
+from .agent_boundary import (
+    AgentAuthority,
+    AgentDirectory,
+    AgentMessageBoundary,
+    AgentMessageDecision,
+    AgentMessageRequest,
+    AgentMessageResult,
+    AuthorizedControl,
+    MessagePurpose,
+)
+from .boundary_evaluation import (
+    ContainmentClass,
+    benchmark_agent_boundaries,
+    run_agent_boundary_evaluation,
+)
+from .causal_audit import AuditVerification, append_chained_audit, verify_causal_audit
+from .content_inspection import ContentInspection, InspectionLimits, inspect_content
+from .envelope import (
+    ContentEnvelope,
+    ContentSecurityFinding,
+    ContentSourceType,
+    Transformation,
+    least_trusted,
+)
 from .evaluation import (
     SafeCounterfactualBaseline,
     adversarial_scenarios,
@@ -8,7 +32,35 @@ from .evaluation import (
     create_demo_registry,
     run_integration_evaluation,
 )
+from .execution import (
+    DestinationClassification,
+    DestinationRegistration,
+    ExecutionPolicyDecision,
+    GatewayExecutionError,
+    GatewayExecutionHostControl,
+    GatewayExecutionOutcome,
+    GatewayExecutionPreparation,
+    GatewayRecoveryPolicy,
+    GatewayWorker,
+)
+from .file_access import (
+    AllowedRoot,
+    FileAccessPolicy,
+    FileReadDecision,
+    FileReadReason,
+    FileReadRequest,
+    FileReadResult,
+    SafeFileReader,
+)
 from .gateway import GuardedToolGateway
+from .memory import (
+    MemoryDecision,
+    MemoryReadResult,
+    MemoryRecord,
+    MemoryWriteRequest,
+    MemoryWriteResult,
+    ProvenanceMemory,
+)
 from .models import (
     AgentPlan,
     BoundaryAuditEvent,
@@ -18,28 +70,110 @@ from .models import (
     ProposedToolCall,
     WorkflowResult,
 )
+from .persistent_runtime import (
+    PersistentRuntimeConfig,
+    PersistentRuntimeError,
+    RuntimeBackend,
+)
+from .recovery import (
+    GatewayRecoveryCandidate,
+    GatewayRecoveryOutcome,
+    GatewayRecoveryStatus,
+)
+from .runtime_context import (
+    RUNTIME_SECURITY_CONTEXT_VERSION,
+    RuntimeDerivedOutput,
+    RuntimeSecurityContext,
+)
+from .sequence import (
+    CausalEventStore,
+    SecurityEvent,
+    SecurityEventType,
+    SequenceDecision,
+    SequencePolicy,
+    SequencePolicyResult,
+)
 from .tools import LocalToolRegistry, ToolRegistryError, WorkspaceBoundaryError
 from .workflow import AgentPlanner, FixturePlanner, GuardedAgentWorkflow
 
 __all__ = [
     "AgentPlan",
     "AgentPlanner",
+    "AgentAuthority",
+    "AgentDirectory",
+    "AgentMessageBoundary",
+    "AgentMessageDecision",
+    "AgentMessageRequest",
+    "AgentMessageResult",
+    "AllowedRoot",
+    "AuthorizedControl",
     "BoundaryAuditEvent",
     "BoundaryStage",
+    "CausalEventStore",
+    "AuditVerification",
+    "ContainmentClass",
+    "ContentEnvelope",
+    "ContentInspection",
+    "ContentSecurityFinding",
+    "ContentSourceType",
+    "DestinationClassification",
+    "DestinationRegistration",
+    "ExecutionPolicyDecision",
+    "FileAccessPolicy",
+    "FileReadDecision",
+    "FileReadReason",
+    "FileReadRequest",
+    "FileReadResult",
     "FixturePlanner",
     "GatewayResult",
     "GatewayStatus",
+    "GatewayExecutionError",
+    "GatewayExecutionHostControl",
+    "GatewayExecutionOutcome",
+    "GatewayExecutionPreparation",
+    "GatewayRecoveryCandidate",
+    "GatewayRecoveryOutcome",
+    "GatewayRecoveryPolicy",
+    "GatewayRecoveryStatus",
+    "GatewayWorker",
     "GuardedAgentWorkflow",
     "GuardedToolGateway",
+    "InspectionLimits",
     "LocalToolRegistry",
+    "MemoryDecision",
+    "MemoryReadResult",
+    "MemoryRecord",
+    "MemoryWriteRequest",
+    "MemoryWriteResult",
+    "MessagePurpose",
     "ProposedToolCall",
+    "PersistentRuntimeConfig",
+    "PersistentRuntimeError",
     "SafeCounterfactualBaseline",
+    "SafeFileReader",
+    "SecurityEvent",
+    "SecurityEventType",
+    "SequenceDecision",
+    "SequencePolicy",
+    "SequencePolicyResult",
     "ToolRegistryError",
+    "Transformation",
     "WorkflowResult",
     "WorkspaceBoundaryError",
     "adversarial_scenarios",
     "benchmark_gateway",
+    "benchmark_agent_boundaries",
+    "append_chained_audit",
     "benign_scenarios",
     "create_demo_registry",
+    "inspect_content",
+    "least_trusted",
+    "ProvenanceMemory",
+    "RUNTIME_SECURITY_CONTEXT_VERSION",
+    "RuntimeDerivedOutput",
+    "RuntimeBackend",
+    "RuntimeSecurityContext",
     "run_integration_evaluation",
+    "run_agent_boundary_evaluation",
+    "verify_causal_audit",
 ]

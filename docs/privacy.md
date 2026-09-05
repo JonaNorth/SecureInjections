@@ -3,7 +3,7 @@
 ## Validated Guard, Gateway, and proxy defaults
 
 Raw prompt logging, raw model-response logging, and raw tool-argument logging are off in the
-validated v0.5.0-rc2 path. Guard and proxy audit retains bounded metadata: timestamps,
+validated Level 1 Community path. Guard and proxy audit retains bounded metadata: timestamps,
 source/destination types, decisions, reason and finding codes, correlation IDs, normalized
 content/request/response hashes, profile/policy hashes, upstream-dispatch state, timings, and
 record hashes. It does not retain blocked excerpts, API credentials, or client request IDs.
@@ -20,9 +20,8 @@ Scanned data is never executed, evaluated, resolved as a URL, interpolated into 
 used to run a package manager, imported as code, or treated as a local resource path. Normalization
 and decoding operate only on bounded in-memory strings.
 
-Threat feeds move rules and threat-example embeddings from a distribution service to a client. The
-threat intelligence service never needs to receive scanned application input. Feed update commands
-are explicit administrative operations and are separate from `Scanner.scan()`.
+Community does not include threat-feed administration, trained classifiers, embedding models,
+or research pipelines.
 
 Applications can explicitly opt into a quarantine backend that stores raw text, or build their own
 logging/storage around results. Those choices are outside the scanner's default guarantees and must

@@ -18,5 +18,5 @@ topology.
 ## Not independently runtime-validated
 
 LM Studio, vLLM, llama.cpp servers, cloud providers, and other OpenAI-compatible implementations
-have no independent runtime-validation claim in v0.5.0-rc2. Protocol similarity is not evidence
+have no independent runtime-validation claim in v0.6.0-rc1. Protocol similarity is not evidence
 of product compatibility.

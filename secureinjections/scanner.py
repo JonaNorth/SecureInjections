@@ -5,20 +5,18 @@ from __future__ import annotations
 import time
 from collections import Counter
 
-from .classifier import (
+from .classifier_contract import (
     AmbiguityClassifier,
     ClassifierInput,
     IntentClassifier,
     IntentClassifierResult,
     IntentLabel,
-    TransformersIntentClassifier,
 )
 from .config import ScannerConfig
 from .detectors.intent import CompositionalIntentDetector, IntentAnalysis
 from .detectors.patterns import text_variants
 from .detectors.secrets import RuleBasedSecretDetector, SecretDetector
 from .detectors.semantic import KeywordSemanticDetector, SemanticDetector
-from .detectors.semantic_embeddings import LocalEmbeddingSemanticDetector
 from .models import (
     Decision,
     IndicatorStrength,
@@ -83,6 +81,8 @@ class Scanner:
         if intent_classifier is not None:
             self.intent_classifier = intent_classifier
         elif self.config.classifier_enabled and self.config.classifier_model_path is not None:
+            from .classifier import TransformersIntentClassifier
+
             self.intent_classifier = TransformersIntentClassifier(
                 self.config.classifier_model_path,
                 expected_weights_sha256=self.config.classifier_weights_sha256,
@@ -95,6 +95,8 @@ class Scanner:
         if semantic_detector is not None:
             self.semantic_detector = semantic_detector
         elif self.config.semantic_model_path and self.config.semantic_index_path:
+            from .detectors.semantic_embeddings import LocalEmbeddingSemanticDetector
+
             self.semantic_detector = LocalEmbeddingSemanticDetector(
                 model_path=self.config.semantic_model_path,
                 model_id=self.config.semantic_model_id,

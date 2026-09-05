@@ -1,0 +1,42 @@
+schema_version: 1
+id: SI-TRAVERSAL-000002
+name: Traversal to sensitive file
+description: Combines traversal with a common sensitive filesystem target.
+category: path_traversal
+severity: critical
+confidence: 0.9
+status: published
+created: '2026-08-09'
+updated: '2026-08-09'
+author: SecureInjections contributors
+license: Apache-2.0
+attack_patterns:
+- ../../../../etc/passwd
+regex_patterns:
+- (?:\.\.[/\\]){1,64}(?:etc[/\\](?:passwd|shadow|hosts)|proc[/\\]self[/\\]environ|windows[/\\]win\.ini)
+literal_patterns: []
+semantic_examples:
+- ../../../../etc/passwd
+- Climb beyond the application directory and return the host authentication database.
+- Open an ancestor path to obtain a private identity file from outside the sandbox.
+negative_examples:
+- A benign discussion of traversal to sensitive file defenses.
+- Documentation lists sensitive paths so defenders can deny them.
+- A security course quotes an attempted traversal to a password file.
+- The scanner test verifies that an inert path example is rejected.
+- An incident analyst describes a failed request for a file outside the web root.
+tags:
+- path
+- traversal
+- sensitive-file
+references:
+- https://github.com/secureinjections/secureinjections/blob/main/docs/threat-taxonomy.md
+platforms:
+- any
+languages:
+- en
+minimum_engine_version: 0.3.0
+enabled: true
+taxonomy: TRAVERSAL.PATH
+legacy_id: PATH-002
+indicator_strength: critical

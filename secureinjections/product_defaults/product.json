@@ -1,0 +1,13 @@
+{
+  "schema_version": "secureinjections-product-config-v0.1",
+  "listen": {
+    "host": "127.0.0.1",
+    "port": 8000
+  },
+  "profiles": {
+    "guard_proxy": "guard-proxy.yaml",
+    "local_agent": "local-agent.yaml"
+  },
+  "expected_model": "qwen2.5:7b",
+  "raw_content_logging": false
+}

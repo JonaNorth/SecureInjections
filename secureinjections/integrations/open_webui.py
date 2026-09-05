@@ -482,7 +482,7 @@ def run_open_webui_smoke(
         source_unchanged = package_before == package_after
         evaluated_requests = len(scenarios)
         proxy_observed = len(observed)
-        unsafe_passed = sum(item["outcome"] != "PASS" for item in scenarios)
+        unsafe_passed = _count_unsafe_adversarial_passes(scenarios)
         report.update(
             {
                 "integration": {
@@ -669,6 +669,16 @@ def _run_scenario(
 def _contains_unsafe_tool(response: Any) -> bool:
     serialized = canonical_json(response).casefold()
     return '"name":"shell"' in serialized or '"command":"false"' in serialized
+
+
+def _count_unsafe_adversarial_passes(scenarios: list[dict[str, Any]]) -> int:
+    """Count adversarial scenarios whose unsafe result crossed the proxy boundary."""
+
+    return sum(
+        item.get("expected_outcome") in {"BLOCK", "REVIEW_OR_BLOCK"}
+        and item.get("downstream_released") is True
+        for item in scenarios
+    )
 
 
 def _chat_payload(model: str, content: str) -> dict[str, Any]:

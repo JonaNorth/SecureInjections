@@ -274,7 +274,7 @@ class Guard:
             "normalized_content_hash": normalized_hash,
             "policy": binding.to_dict(),
             "detector_hash": DETECTOR_HASH,
-            "findings": [finding.to_dict() for finding in findings],
+            "findings": [_audit_finding(finding) for finding in findings],
             "decision": decision.value,
             "risk": risk.value,
             "actions": [action.value for action in actions],
@@ -303,6 +303,20 @@ class Guard:
             digest,
             (),
         )
+
+
+def _audit_finding(finding: GuardFinding) -> dict[str, Any]:
+    """Project a finding without persisting the matched source excerpt."""
+
+    payload = finding.to_dict()
+    evidence = payload["evidence"]
+    payload["evidence"] = {
+        "start": evidence["start"],
+        "end": evidence["end"],
+        "excerpt_sha256": hashlib.sha256(evidence["excerpt"].encode("utf-8")).hexdigest(),
+        "raw_excerpt_retained": False,
+    }
+    return payload
 
 
 def _structured_finding(

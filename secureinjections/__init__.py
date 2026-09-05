@@ -1,10 +1,9 @@
 """SecureInjections public API."""
 
-from .classifier import (
+from .classifier_contract import (
     ClassifierThresholds,
     IntentClassifierResult,
     IntentLabel,
-    TransformersIntentClassifier,
 )
 from .config import ScannerConfig
 from .models import (
@@ -34,6 +33,5 @@ __all__ = [
     "ClassifierThresholds",
     "IntentClassifierResult",
     "IntentLabel",
-    "TransformersIntentClassifier",
 ]
 __version__ = ENGINE_VERSION

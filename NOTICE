@@ -1,0 +1,10 @@
+SecureInjections Community
+
+This Community release boundary is prepared under the Apache License, Version 2.0.
+See LICENSE for the license text and docs/third-party-notices.md for dependency notices.
+
+In the private development repository, this notice applies only to files selected by
+release/v0.6.0-rc1-community-allowlist.txt and generated Community candidate notices.
+In the clean Community export, COMMUNITY-EXPORT-MANIFEST.json identifies those source files.
+It does not extend a new license grant to Pro/private-only or excluded research source.
+Existing Apache-2.0 grants on previously published content remain unchanged.

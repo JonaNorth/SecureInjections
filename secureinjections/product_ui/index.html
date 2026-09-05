@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23176b4b'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Arial' font-weight='700' font-size='17' fill='white'%3ES%3C/text%3E%3C/svg%3E">
+    <title>SecureInjections Community · Local AI Protection</title>
+    <link rel="stylesheet" href="/assets/file-ingestion.css">
+  </head>
+  <body>
+    <section id="onboarding" class="onboarding" hidden aria-labelledby="onboarding-title">
+      <div class="onboarding-card card">
+        <p class="eyebrow">First run</p>
+        <div class="onboarding-step" data-step="0"><h1 id="onboarding-title">Welcome to SecureInjections Community</h1><p>Community protects supported AI workflows explicitly routed through its local service. It does not scan your whole Mac or intercept every AI application.</p></div>
+        <div class="onboarding-step" data-step="1" hidden><h1>Check this Mac</h1><p>These checks come from the installed local runtime. Nothing is downloaded and no cloud check is performed.</p><div id="doctor-checks" class="doctor-checks"></div></div>
+        <div class="onboarding-step" data-step="2" hidden><h1>Connect protection</h1><p>The validated local workflow uses Ollama with <code>qwen2.5:7b</code> and the SecureInjections Guard Proxy. You can skip this and connect later from Integrations.</p></div>
+        <div class="onboarding-step" data-step="3" hidden><h1>Ready</h1><p>Files can be inspected locally now. Raw prompts and blocked file contents are not retained. “Needs review” stops an action; it cannot continue in this product version.</p></div>
+        <div class="onboarding-actions"><button id="onboarding-back" class="quiet-button" type="button" hidden>Back</button><button id="onboarding-next" class="primary-button" type="button">Continue</button></div>
+        <p id="onboarding-error" class="callout" hidden></p>
+      </div>
+    </section>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <header class="brand" aria-label="SecureInjections Community"><span class="brand-mark">S</span><span><strong>SecureInjections Community</strong><small>Local AI Protection</small></span></header>
+        <nav aria-label="Primary navigation">
+          <button class="nav-item active" data-page="overview" type="button">Overview</button>
+          <button class="nav-item" data-page="protection" type="button">Protection</button>
+          <button class="nav-item" data-page="activity" type="button">Activity</button>
+          <button class="nav-item" data-page="files" type="button">Files</button>
+          <button class="nav-item" data-page="integrations" type="button">Integrations</button>
+        </nav>
+        <div class="privacy-note"><span></span>Local service · Raw logging off</div>
+      </aside>
+      <main class="main-content">
+        <div id="backend-banner" class="banner error-banner" hidden>The local protection service is unavailable. Status may be stale.</div>
+        <section id="page-overview" class="page active" aria-labelledby="overview-title">
+          <header class="page-header"><div><p class="eyebrow">Overview</p><h1 id="overview-title">Your local AI protection</h1></div><button class="quiet-button refresh-status" type="button">Refresh</button></header>
+          <article class="status-hero card"><div id="overall-orb" class="status-orb"><span></span></div><div><p id="overall-label" class="status-label">Checking protection…</p><h2 id="overall-title">Connecting to the local service</h2><p id="overall-detail">Status comes from active runtime and configuration signals.</p></div></article>
+          <div class="section-heading"><h2>Protected surfaces</h2><span id="surface-summary"></span></div>
+          <div id="surface-grid" class="surface-grid loading-grid"></div>
+          <div class="dashboard-grid">
+            <article class="card"><div class="section-heading compact"><h2>Today</h2><button class="link-button" data-go="activity" type="button">View activity</button></div><div class="count-grid"><div><strong id="count-allow">0</strong><span>Allowed</span></div><div><strong id="count-review">0</strong><span>Review</span></div><div><strong id="count-block">0</strong><span>Blocked</span></div></div></article>
+            <article class="card"><div class="section-heading compact"><h2>Supported connections</h2><button class="link-button" data-go="integrations" type="button">Manage</button></div><div id="overview-integrations" class="mini-list"></div></article>
+          </div>
+        </section>
+        <section id="page-protection" class="page" aria-labelledby="protection-title">
+          <header class="page-header"><div><p class="eyebrow">Protection</p><h1 id="protection-title">Protection surfaces</h1><p>What is enforced now, and what still needs a supported connection.</p></div></header>
+          <article class="route-card card"><span>AI client</span><b>→</b><span class="route-shield">SecureInjections</span><b>→</b><span>Local model</span></article>
+          <article class="card agent-card">
+            <div class="section-heading compact"><div><h2>Protected interaction</h2><p>Prompts use the configured guarded local-agent path.</p></div><span id="agent-availability" class="state-pill available_not_connected">Checking</span></div>
+            <label for="general-agent-prompt">Ask the guarded agent</label>
+            <textarea id="general-agent-prompt" rows="3" placeholder="Ask a question…"></textarea>
+            <button id="run-general-agent" class="primary-button" type="button" disabled>Run protected</button>
+            <div id="general-agent-result" class="agent-result" hidden aria-live="polite"></div>
+          </article>
+          <div id="protection-list" class="stack-list"></div>
+          <p class="callout">Always-on protection applies only to explicitly configured, supported integrations routed through the local Gateway or Guard Proxy. SecureInjections does not intercept system-wide HTTPS traffic.</p>
+        </section>
+        <section id="page-activity" class="page" aria-labelledby="activity-title">
+          <header class="page-header"><div><p class="eyebrow">Activity</p><h1 id="activity-title">Local protection activity</h1><p>Bounded decisions and safe findings. Raw prompts and file contents are not shown or retained.</p></div><button id="refresh-activity" class="quiet-button" type="button">Refresh</button></header>
+          <div id="activity-list" class="activity-list"></div><div id="activity-empty" class="empty-state card" hidden><span>✓</span><h2>No activity yet</h2><p>Protected interactions will appear here after a real policy decision.</p></div>
+        </section>
+        <section id="page-files" class="page" aria-labelledby="files-title">
+          <header class="page-header"><div><p class="eyebrow">Files</p><h1 id="files-title">Inspect a local file</h1><p>Files cross the existing SafeFileReader boundary before anything becomes available to an agent.</p></div></header>
+          <section class="card file-card" aria-live="polite">
+            <div id="picker-view"><label id="drop-zone" class="drop-zone" for="file-input"><span class="upload-icon">↑</span><strong>Choose a file</strong><span>or drag and drop it here</span><small id="support-copy">Loading supported file types…</small></label><input id="file-input" type="file" hidden></div>
+            <div id="selected-view" class="selected" hidden><div class="file-row"><div class="file-icon">TXT</div><div class="file-copy"><strong id="selected-name"></strong><span id="selected-meta"></span></div><button id="change-file" class="quiet-button" type="button">Change</button></div><button id="inspect-file" class="primary-button" type="button">Inspect file</button></div>
+            <div id="loading-view" class="loading" hidden><span class="spinner"></span><div><strong>Inspecting file…</strong><p>Checking access, content, and provenance.</p></div></div>
+            <div id="result-view" hidden><div id="result-heading" class="result-heading"><span id="result-icon" class="result-icon"></span><div><p id="result-status" class="result-status"></p><h2 id="result-name"></h2></div></div><p id="result-summary" class="result-summary"></p><dl class="metadata"><div><dt>Type</dt><dd id="result-type"></dd></div><div><dt>Size</dt><dd id="result-size"></dd></div><div><dt>Trust</dt><dd id="result-trust"></dd></div></dl><div id="findings" class="findings" hidden><h3>What we found</h3><ul id="findings-list"></ul></div><div id="ready-note" class="ready-note" hidden><strong>File inspected and ready</strong><span>The safe reference lasts for this product session.</span><button id="use-in-agent" class="primary-button" type="button">Use in agent</button></div><div id="file-agent-panel" class="agent-panel" hidden><label for="file-agent-prompt">Ask about this file</label><textarea id="file-agent-prompt" rows="3" placeholder="Summarize the important points…"></textarea><button id="run-file-agent" class="primary-button" type="button">Run protected</button><div id="file-agent-result" class="agent-result" hidden aria-live="polite"></div></div><details class="advanced"><summary>Advanced details</summary><dl><div><dt>Request</dt><dd id="request-id"></dd></div><div><dt>Audit</dt><dd id="audit-id"></dd></div><div><dt>Policy</dt><dd id="policy-id"></dd></div><div><dt>Decision reason</dt><dd id="reason-code"></dd></div></dl></details><button id="inspect-another" class="quiet-button wide" type="button">Inspect another file</button></div>
+            <div id="error-view" class="error" hidden><span class="result-icon">!</span><div><p class="result-status">Couldn’t inspect this file</p><h2 id="error-title">Try another file</h2><p id="error-message"></p><button id="error-reset" class="quiet-button" type="button">Choose another file</button></div></div>
+          </section>
+        </section>
+        <section id="page-integrations" class="page" aria-labelledby="integrations-title"><header class="page-header"><div><p class="eyebrow">Integrations</p><h1 id="integrations-title">Supported connections</h1><p>Connection state is checked by the local service. Configuration is never changed without your action.</p></div></header><div id="integration-list" class="integration-list"></div></section>
+      </main>
+    </div>
+    <script src="/assets/file-ingestion.js" defer></script>
+  </body>
+</html>

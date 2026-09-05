@@ -1,6 +1,6 @@
 # Network behavior
 
-Under the validated v0.5.0-rc2 profiles, runtime inference traffic is local:
+Under the validated Community Level 1 profiles, runtime inference traffic is local:
 
 - applications connect to the Guard Proxy over loopback;
 - the proxy connects to a local model server over loopback;
@@ -12,6 +12,4 @@ The Local Guard Profile and proxy configuration reject non-loopback model endpoi
 also disables environment-proxy routing for its validated upstream path.
 
 This is not a claim that SecureInjections never uses a network. Package installation can download
-Python dependencies, explicit threat-feed administration can fetch or receive artifacts through
-operator-controlled workflows, and separately installed applications may have their own network
-behavior. Those activities are distinct from the validated local inference path.
+Python dependencies, and separately installed applications may have their own network behavior. Those activities are distinct from the validated local inference path.

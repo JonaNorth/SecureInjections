@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://secureinjections.dev/schema/rule-v1.schema.json",
+  "title": "SecureInjections Threat Rule v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "id", "name", "description", "category", "severity",
+    "confidence", "status", "created", "updated", "author", "license", "enabled"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "id": {"type": "string", "pattern": "^SI-(PI|AGENT|SECRET|SSRF|SHELL|SQL|TRAVERSAL|NETWORK|OBFUSCATION)-[0-9]{6}$"},
+    "name": {"type": "string", "minLength": 1, "maxLength": 200},
+    "description": {"type": "string", "minLength": 1, "maxLength": 2000},
+    "category": {"type": "string", "minLength": 1, "maxLength": 100},
+    "severity": {"enum": ["low", "medium", "high", "critical"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "status": {"enum": ["draft", "testing", "published", "deprecated"]},
+    "created": {"type": "string", "format": "date"},
+    "updated": {"type": "string", "format": "date"},
+    "author": {"type": "string", "minLength": 1},
+    "license": {"type": "string", "minLength": 1},
+    "tags": {"$ref": "#/$defs/stringArray"},
+    "references": {"$ref": "#/$defs/stringArray"},
+    "attack_patterns": {"$ref": "#/$defs/stringArray"},
+    "regex_patterns": {"$ref": "#/$defs/stringArray"},
+    "literal_patterns": {"$ref": "#/$defs/stringArray"},
+    "semantic_examples": {"$ref": "#/$defs/stringArray"},
+    "negative_examples": {"$ref": "#/$defs/stringArray"},
+    "platforms": {"$ref": "#/$defs/stringArray"},
+    "languages": {"$ref": "#/$defs/stringArray"},
+    "minimum_engine_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][0-9A-Za-z.-]+)?$"},
+    "enabled": {"type": "boolean"},
+    "taxonomy": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*(\\.[A-Z][A-Z0-9_]*)+$"},
+    "legacy_id": {"type": "string", "pattern": "^[A-Z][A-Z0-9]+-[0-9]{3}$"},
+    "indicator_strength": {"enum": ["weak", "moderate", "strong", "critical"]}
+  },
+  "anyOf": [
+    {"required": ["regex_patterns"]},
+    {"required": ["literal_patterns"]},
+    {"required": ["semantic_examples"]}
+  ],
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    }
+  }
+}

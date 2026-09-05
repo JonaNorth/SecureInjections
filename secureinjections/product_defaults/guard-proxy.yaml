@@ -1,0 +1,29 @@
+profile:
+  id: openai-guard-proxy-profile
+  version: v0.1
+listen:
+  host: 127.0.0.1
+  port: 8765
+upstream:
+  provider: openai_compatible_local
+  base_url: http://127.0.0.1:11434/v1
+  model_policy: configured
+  doctor_model: qwen2.5:7b
+guard:
+  policy: default
+  enforcement: enforce
+limits:
+  request_bytes: 2000000
+  response_bytes: 2000000
+  message_count: 64
+  message_bytes: 256000
+  tool_count: 64
+  tool_schema_bytes: 65536
+  tool_argument_bytes: 32768
+  timeout_seconds: 120
+  concurrency: 8
+privacy:
+  raw_content_logging: false
+audit:
+  enabled: true
+  directory: ../Audit/guard-proxy

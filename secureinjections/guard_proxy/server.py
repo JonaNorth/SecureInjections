@@ -31,6 +31,28 @@ class GuardProxyRequestHandler(BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
     def do_GET(self) -> None:  # noqa: N802
+        if self.path == "/v1/secureinjections/status":
+            policy = self.server.engine.policy
+            self._send(
+                200,
+                {
+                    "schema_version": "openai-guard-proxy-status-v0.1",
+                    "service": "guard-proxy",
+                    "service_running": True,
+                    "binding": "loopback-only",
+                    "enforcement_mode": self.server.profile.enforcement_mode.upper(),
+                    "upstream_classification": "loopback-only",
+                    "profile": {
+                        "id": self.server.profile.profile_id,
+                        "version": self.server.profile.profile_version,
+                        "hash": self.server.profile.profile_hash,
+                    },
+                    "policy": {"id": policy.policy_id, "version": policy.version},
+                    "raw_content_retained": False,
+                },
+                {},
+            )
+            return
         if self.path != "/v1/models":
             self._send(
                 404,

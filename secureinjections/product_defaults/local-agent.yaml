@@ -1,0 +1,33 @@
+profile:
+  id: local-guard-profile
+  version: v0.1
+runtime:
+  provider: ollama
+  host: http://127.0.0.1:11434
+  model: qwen2.5:7b
+  timeout_seconds: 180
+guard:
+  policy: default
+  dry_run: false
+  audit: ../Audit/local-agent/guard-audit.jsonl
+agent:
+  max_turns: 6
+  max_tool_calls: 3
+  model_response_limit: 65536
+  retrieved_content_limit: 64000
+  tool_output_limit: 64000
+tools:
+  enabled:
+    - calculator
+    - workspace_reader
+    - document_retriever
+  workspace_root: ../Data/workspace
+  retrieval_root: ../Data/retrieval
+memory:
+  enabled: true
+  storage_location: ../State/memory.jsonl
+external:
+  enabled: true
+  simulated_only: true
+privacy:
+  raw_content_logging: false

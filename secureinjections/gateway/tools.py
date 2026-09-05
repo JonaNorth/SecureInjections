@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 from ..guard.audit import append_audit
+from ..guard.models import TrustLevel
+from .file_access import AllowedRoot, FileAccessPolicy
 
 
 class ToolRegistryError(ValueError):
@@ -39,19 +41,55 @@ class LocalToolRegistry:
         *,
         documents: Mapping[str, str] | None = None,
         memory_path: Path | None = None,
+        allowed_roots: Mapping[str, Path] | None = None,
+        allowed_root_trust: Mapping[str, TrustLevel] | None = None,
+        max_file_size: int = 1_000_000,
+        allow_sensitive_files: bool = False,
+        allow_hard_links: bool = False,
     ) -> None:
         self._workspace_root = workspace_root.resolve()
         if not self._workspace_root.is_dir():
             raise ToolRegistryError("workspace sandbox root must be an existing directory")
         self._documents = dict(documents or {})
         self._memory_path = memory_path
+        configured_roots = (
+            {"workspace": self._workspace_root} if allowed_roots is None else allowed_roots
+        )
+        configured_trust = dict(allowed_root_trust or {})
+        if set(configured_trust) - set(configured_roots):
+            raise ToolRegistryError("trust was configured for an unknown allowed root")
+        self._file_policy = FileAccessPolicy(
+            tuple(
+                AllowedRoot(
+                    root_id,
+                    Path(path),
+                    configured_trust.get(root_id, TrustLevel.INTERNAL),
+                )
+                for root_id, path in configured_roots.items()
+            ),
+            max_file_size=max_file_size,
+            allow_sensitive=allow_sensitive_files,
+            allow_hard_links=allow_hard_links,
+        )
         self._memory: list[dict[str, Any]] = []
         self._external_sink: list[dict[str, Any]] = []
         self._capability = _GatewayCapability()
+        self._capability_claimed = False
         self.counters = RegistryCounters()
 
     def _gateway_capability(self) -> _GatewayCapability:
+        if self._capability_claimed:
+            raise PermissionError("gateway capability has already been claimed")
+        self._capability_claimed = True
         return self._capability
+
+    def _gateway_file_policy(self, capability: _GatewayCapability) -> FileAccessPolicy:
+        self._require(capability)
+        return self._file_policy
+
+    def _record_workspace_read(self, capability: _GatewayCapability) -> None:
+        self._require(capability)
+        self.counters.workspace_reads += 1
 
     @property
     def memory_records(self) -> tuple[Mapping[str, Any], ...]:

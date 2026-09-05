@@ -1,10 +1,17 @@
 """Guarded local-model agent integration."""
 
+from ..gateway import (
+    RUNTIME_SECURITY_CONTEXT_VERSION,
+    RuntimeDerivedOutput,
+    RuntimeSecurityContext,
+)
 from .evaluation import (
     LIVE_FIXTURE_VERSION,
     adversarial_live_scenarios,
+    benchmark_runtime_security_metadata,
     benign_live_scenarios,
     run_live_ollama_evaluation,
+    run_live_openai_compatible_evaluation,
 )
 from .factory import create_local_agent_model
 from .loop import (
@@ -67,6 +74,7 @@ __all__ = [
     "OLLAMA_ADAPTER_VERSION",
     "OPENAI_COMPATIBLE_LOCAL_ADAPTER_VERSION",
     "OPENAI_COMPATIBLE_PROTOCOL_VERSION",
+    "RUNTIME_SECURITY_CONTEXT_VERSION",
     "SYSTEM_INSTRUCTION",
     "SYSTEM_INSTRUCTION_HASH",
     "TOOL_SCHEMA_HASH",
@@ -96,12 +104,16 @@ __all__ = [
     "OpenAICompatibleLoopbackTransport",
     "OpenAICompatibleProtocolError",
     "OpenAICompatibleUnavailableError",
+    "RuntimeDerivedOutput",
+    "RuntimeSecurityContext",
     "ToolCallAction",
     "adversarial_live_scenarios",
+    "benchmark_runtime_security_metadata",
     "benign_live_scenarios",
     "create_local_agent_model",
     "parse_action",
     "normalize_openai_chat_response",
     "normalize_openai_message",
     "run_live_ollama_evaluation",
+    "run_live_openai_compatible_evaluation",
 ]

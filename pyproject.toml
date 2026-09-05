@@ -1,19 +1,20 @@
 [build-system]
-requires = ["hatchling>=1.25"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
 name = "secureinjections"
-version = "0.5.0rc2"
+version = "0.6.0rc1"
 description = "Local deterministic security enforcement for LLM and agent boundaries"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { file = "LICENSE" }
+# Apache-2.0 describes only the explicit Community export; see NOTICE.
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "SecureInjections contributors" }]
 keywords = ["security", "prompt-injection", "llm", "agents", "guard-proxy"]
 classifiers = [
   "Development Status :: 3 - Alpha",
-  "License :: OSI Approved :: Apache Software License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -25,12 +26,6 @@ dependencies = ["PyYAML>=6.0.1"]
 fastapi = ["fastapi>=0.110", "uvicorn>=0.29"]
 flask = ["flask>=3.0"]
 service = ["fastapi>=0.110", "uvicorn>=0.29"]
-semantic = ["numpy>=1.26", "sentence-transformers>=3.0"]
-classifier = ["torch>=2.2", "transformers>=4.40", "safetensors>=0.4"]
-training = [
-  "secureinjections[classifier]",
-]
-feed = ["cryptography>=42.0"]
 test = [
   "pytest>=8.0",
   "pytest-benchmark>=4.0",
@@ -39,6 +34,16 @@ test = [
   "flask>=3.0",
   "numpy>=1.26",
   "cryptography>=42.0",
+]
+
+[dependency-groups]
+research = [
+  "cryptography>=42.0",
+  "numpy>=1.26",
+  "safetensors>=0.4",
+  "sentence-transformers>=3.0",
+  "torch>=2.2",
+  "transformers>=4.40",
 ]
 dev = [
   "secureinjections[test]",
@@ -49,25 +54,59 @@ dev = [
 ]
 
 [project.scripts]
-secureinjections = "secureinjections.cli:main"
+secureinjections = "secureinjections.community_cli:main"
 
 [project.urls]
-Homepage = "https://github.com/secureinjections/secureinjections"
-Issues = "https://github.com/secureinjections/secureinjections/issues"
+Homepage = "https://github.com/JonaNorth/SecureInjections"
+Issues = "https://github.com/JonaNorth/SecureInjections/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["secureinjections"]
 exclude = [
+  "/secureinjections/active_learning.py",
+  "/secureinjections/classifier-corpus-schema-v2.json",
+  "/secureinjections/classifier.py",
+  "/secureinjections/classifier_calibration.py",
+  "/secureinjections/classifier_data.py",
+  "/secureinjections/classifier_evaluation.py",
+  "/secureinjections/classifier_training.py",
+  "/secureinjections/cli.py",
+  "/secureinjections/corpus.py",
+  "/secureinjections/dataset_foundation.py",
+  "/secureinjections/detectors/semantic_embeddings.py",
+  "/secureinjections/detectors/semantic_index.py",
+  "/secureinjections/evaluation.py",
+  "/secureinjections/evidence_factory.py",
+  "/secureinjections/evidence_reviewer_contract.py",
+  "/secureinjections/evidence_taxonomy.py",
+  "/secureinjections/model-import-schema-v1.json",
+  "/secureinjections/model_import.py",
+  "/secureinjections/phase1_diagnostics.py",
+  "/secureinjections/phase2_1_diagnostics.py",
+  "/secureinjections/phase2_2_representation.py",
+  "/secureinjections/phase2_validation.py",
   "/secureinjections/phase3_adaptation.py",
   "/secureinjections/pilot_human_audit.py",
+  "/secureinjections/relationship_consensus.py",
+  "/secureinjections/release.py",
+  "/secureinjections/research_training.py",
+  "/secureinjections/review_interactive.py",
+  "/secureinjections/review_workflow.py",
+  "/secureinjections/rules/bundled",
+  "/secureinjections/rules/migration.py",
+  "/secureinjections/rules/quality.py",
+  "/secureinjections/rules/v1",
+  "/secureinjections/semantic-models.json",
+  "/secureinjections/semantic_models.py",
+  "/secureinjections/semantic_registry.py",
+  "/secureinjections/threatintel",
 ]
-
-[tool.hatch.build.targets.wheel.force-include]
-"policies/classifier-evidence-trust-policy.yaml" = "secureinjections/policies/classifier-evidence-trust-policy.yaml"
 
 [tool.hatch.build.targets.sdist]
 exclude = [
   "/.github",
+  "/benchmarks",
+  "/development",
   "/evaluation",
   "/dist",
   "/release",
@@ -78,8 +117,38 @@ exclude = [
   "/tools",
   "/docs/archive",
   "/docs/v0.4.2-*",
+  "/secureinjections/active_learning.py",
+  "/secureinjections/classifier.py",
+  "/secureinjections/classifier-corpus-schema-v2.json",
+  "/secureinjections/classifier_calibration.py",
+  "/secureinjections/classifier_data.py",
+  "/secureinjections/classifier_evaluation.py",
+  "/secureinjections/classifier_training.py",
+  "/secureinjections/cli.py",
+  "/secureinjections/corpus.py",
+  "/secureinjections/dataset_foundation.py",
+  "/secureinjections/detectors/semantic_embeddings.py",
+  "/secureinjections/detectors/semantic_index.py",
+  "/secureinjections/evaluation.py",
+  "/secureinjections/evidence_*",
+  "/secureinjections/model-import-schema-v1.json",
+  "/secureinjections/model_import.py",
+  "/secureinjections/phase1_diagnostics.py",
+  "/secureinjections/phase2_1_diagnostics.py",
+  "/secureinjections/phase2_2_representation.py",
+  "/secureinjections/phase2_validation.py",
   "/secureinjections/phase3_adaptation.py",
   "/secureinjections/pilot_human_audit.py",
+  "/secureinjections/relationship_consensus.py",
+  "/secureinjections/release.py",
+  "/secureinjections/research_training.py",
+  "/secureinjections/review_*",
+  "/secureinjections/rules/bundled",
+  "/secureinjections/rules/migration.py",
+  "/secureinjections/rules/quality.py",
+  "/secureinjections/rules/v1",
+  "/secureinjections/semantic*",
+  "/secureinjections/threatintel",
   "/examples/**/state/*",
   "/examples/**/audit/*",
   "/examples/**/logs/*",
@@ -97,3 +166,8 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
+
+# Optional implementations are deliberately absent from the Community export.
+[[tool.mypy.overrides]]
+module = ["secureinjections.classifier", "secureinjections.detectors.semantic_embeddings"]
+ignore_missing_imports = true

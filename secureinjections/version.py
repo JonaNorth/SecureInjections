@@ -1,6 +1,6 @@
 """Package and compatibility versions kept independent of package imports."""
 
-ENGINE_VERSION = "0.5.0-rc2"
+ENGINE_VERSION = "0.6.0-rc1"
 THREAT_RULE_SCHEMA_VERSION = 1
 SEMANTIC_INDEX_VERSION = 1
 FEED_MANIFEST_VERSION = 1

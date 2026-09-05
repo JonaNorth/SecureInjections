@@ -1,0 +1,1 @@
+Local project notes for the guarded gateway demo.

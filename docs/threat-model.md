@@ -1,6 +1,6 @@
 # Threat model
 
-This threat model covers the v0.5.0-rc2 local deterministic Guard, Guarded Gateway, local model
+This threat model covers the Community v0.6.0-rc1 candidate's local deterministic Guard, Guarded Gateway, local model
 adapters, OpenAI-compatible Guard Proxy, and validated Open WebUI 0.11.0 path.
 
 ## Assets
@@ -70,7 +70,7 @@ sink, or a shell.
 
 Loopback prevents remote network exposure by default, but it is not a local authentication layer.
 Another process or user on the same host may still be able to connect, depending on operating-system
-and application controls. SecureInjections v0.5.0-rc2 does not authenticate clients of its loopback
+and application controls. SecureInjections Community does not authenticate clients of its loopback
 listeners; operators remain responsible for host and account isolation.
 
 ## Out of scope

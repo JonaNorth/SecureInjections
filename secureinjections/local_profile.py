@@ -14,7 +14,7 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import Any
 
-from .gateway import GatewayStatus, GuardedToolGateway, LocalToolRegistry
+from .gateway import ContentEnvelope, GatewayStatus, GuardedToolGateway, LocalToolRegistry
 from .guard import Guard, GuardPolicy
 from .guard.audit import append_audit, canonical_json, record_hash
 from .local_agent import (
@@ -506,6 +506,7 @@ def run_profile_agent(
     prompt: str,
     *,
     model: LocalAgentModel | None = None,
+    safe_file_envelopes: tuple[ContentEnvelope, ...] = (),
 ) -> ProfileAgentRun:
     if not prompt:
         raise LocalProfileError("a non-empty prompt is required")
@@ -527,7 +528,11 @@ def run_profile_agent(
     )
     started_at = _now()
     started = time.perf_counter_ns()
-    result = agent.run(prompt, dry_run=profile.guard.dry_run)
+    result = agent.run(
+        prompt,
+        dry_run=profile.guard.dry_run,
+        safe_file_envelopes=safe_file_envelopes,
+    )
     elapsed_ms = (time.perf_counter_ns() - started) / 1_000_000
     ended_at = _now()
     session = _session_record(

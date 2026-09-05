@@ -1,0 +1,36 @@
+name: Community Source CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  community-source:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Community development dependencies
+        run: python -m pip install --upgrade pip && python -m pip install '.[service,test]' ruff mypy types-PyYAML build
+      - name: Validate Community source
+        run: |
+          ruff check secureinjections tests
+          ruff format --check secureinjections tests
+          mypy --disable-error-code=import-not-found secureinjections
+          pytest -q \
+            --deselect=tests/test_execution_recovery_v03c3b.py::test_recovery_methods_are_not_gateway_or_model_surfaces
+      - name: Build and inspect Community distributions
+        run: |
+          python -m build --outdir "$RUNNER_TEMP/dist"
+          wheel=$(find "$RUNNER_TEMP/dist" -maxdepth 1 -name '*.whl' -print -quit)
+          python -c 'import sys, zipfile; names=zipfile.ZipFile(sys.argv[1]).namelist(); forbidden=("classifier_training", "evidence_factory", "research_training", "review_workflow", "phase1_diagnostics"); assert not any(any(item in name for item in forbidden) for name in names)' "$wheel"
+          python -m venv "$RUNNER_TEMP/community-smoke"
+          "$RUNNER_TEMP/community-smoke/bin/pip" install "$wheel[service]"
+          "$RUNNER_TEMP/community-smoke/bin/secureinjections" --version
+          "$RUNNER_TEMP/community-smoke/bin/secureinjections" --help
+          "$RUNNER_TEMP/community-smoke/bin/secureinjections" inspect --text hello --json

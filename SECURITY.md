@@ -17,7 +17,7 @@ is enabled.
 
 ## Supported security claims
 
-SecureInjections v0.5.0-rc2 is a release candidate. Its validated product path is local,
+The private SecureInjections Community v0.6.0-rc1 candidate has a local,
 loopback-only, non-streaming, deterministic-first enforcement for instrumented LLM and agent
 boundaries. Detection and enforcement are distinct.
 
@@ -72,12 +72,11 @@ The host OS, SecureInjections process and code, configured policies, and explici
 runtime artifacts are trusted assumptions. Rule files are executable-adjacent configuration
 because they contain regular expressions. Deploy only reviewed, authenticated policies and rules.
 
-Signed threat-feed installation verifies the Ed25519 key, canonical manifest, artifact hashes,
-engine compatibility, archive safety, and downgrade rules before atomic activation. Optional local
-semantic/classifier artifacts are explicit operator-supplied dependencies; remote model loading
-and remote code are disabled.
+The Community candidate excludes the private research/classifier stack and research-oriented
+threat-feed distribution tooling. It does not download remote detector models or execute remote
+code.
 
 Application owners remain responsible for authentication, authorization, sandboxing,
 parameterized queries, output encoding, least privilege, secret management, egress controls,
 dependency security, and safe logging. See the [threat model](docs/threat-model.md) and
-[release claims matrix](docs/release-claims-v0.5.0-rc2.md).
+[candidate claims matrix](docs/release-claims-v0.6.0-rc1.md).

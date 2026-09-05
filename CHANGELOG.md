@@ -1,5 +1,12 @@
 # Changelog
 
+## v0.6.0-rc1 — private technical candidate
+
+Proposed SecureInjections Community open-core candidate. This version packages the validated
+Level 1 local product, removes research/training modules from the product artifact, and introduces
+an explicit non-published Community source boundary. Signed human rights evidence now supports Apache-2.0 preparation; this entry
+does not declare a release.
+
 ## v0.5.0-rc2 — 2026-08-25
 
 RC1 was the first clean public-source candidate. No GitHub Release, release assets, or Python
