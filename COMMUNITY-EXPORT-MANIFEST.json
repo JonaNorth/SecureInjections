@@ -1,5 +1,5 @@
 {
-  "canonical_aggregate_sha256": "a814c0f100cd32eeecb12bc9130288f688b0aced369a20c6ea5853b1a936290b",
+  "canonical_aggregate_sha256": "11bfaab937317e4f4944e979c40a3b3cee69851bce508c8b7cc01a500a918222",
   "file_count": 247,
   "files": [
     {
@@ -29,8 +29,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "6813345ff52abdab8f9f50ec258ff2149bf74f984f73f27cf0a0e336e777107c",
-      "size": 6598
+      "sha256": "4d3a89214a275ce5686cea689533b6fdeaf04a52804c626565f274f280f2e31c",
+      "size": 6677
     },
     {
       "path": "SECURITY.md",
@@ -64,8 +64,8 @@
     },
     {
       "path": "docs/release-claims-v0.6.0-rc1.md",
-      "sha256": "b01e252365dc754659c3b26ef98797aec15d972c0bd434bf989c227169090028",
-      "size": 1453
+      "sha256": "e8b9951ca84264ff179afcb00003da3d156d1cd2882ac97ef2edb247b0ef41dd",
+      "size": 1550
     },
     {
       "path": "docs/supported-integrations.md",
@@ -719,8 +719,8 @@
     },
     {
       "path": "secureinjections/persistent_state/store.py",
-      "sha256": "93048bd2a0794c26dddd162e1bb8dbd5ea3c8861606cac2d40b95b0551895618",
-      "size": 100453
+      "sha256": "52014768b3d0f4e2932712ef70c11d7a285633be57b6209c535dbdcaf47cc079",
+      "size": 100570
     },
     {
       "path": "secureinjections/product_agent.py",
@@ -1139,8 +1139,8 @@
     },
     {
       "path": "tests/test_gateway_recovery_v03c3c.py",
-      "sha256": "2ba6e16f6bd5ad56a80374e73a797dadf53cfbdd9752acef34a83dba6b602534",
-      "size": 74864
+      "sha256": "878b6aad4a515aeb45d92b5d79ba21757652b1284f8bfec7ad4bc6ea44644964",
+      "size": 78028
     },
     {
       "path": "tests/test_guard_gateway.py",
@@ -1242,20 +1242,19 @@
     "CANDIDATE.md",
     "COMMUNITY-EXPORT-MANIFEST.json"
   ],
-  "historical_phase5_aggregate": "d6f02d646d7d2cac676071204a71e2efce52cbee135b77a063b21ac3a5bd1275",
-  "intermediate_phase6_aggregate": "a2698366361d8a811d94b2293c7aeb7458da696024ec5a8a31669d8551591aa3",
+  "historical_publication_aggregate": "a814c0f100cd32eeecb12bc9130288f688b0aced369a20c6ea5853b1a936290b",
+  "historical_sdist_sha256": "c1d060a5c549e4d32e22667ccc4b6f6c7f06b0f8f17641430dc5dedf3062086d",
+  "historical_wheel_sha256": "266bf016ad1ae526d983c8118e70524bf288dc55ce22f16bb5f15fec768f10b2",
   "license": "Apache-2.0",
-  "previous_workspace_documentation_gap": "RESOLVED_BY_SIGNED_HUMAN_EVIDENCE",
+  "manual_runtime_validation_requires_targeted_revalidation": "YES",
   "private_git_history_included": false,
   "publication_authorized": false,
-  "rights_evidence_provided": "YES",
-  "schema_version": "secureinjections-community-export-v0.3",
-  "source_base_commit": "a17b11dd3eb533b15674278359e3b7545d0c376e",
+  "schema_version": "secureinjections-community-sqlite-portability-v1",
+  "source_base_commit": "c9550049733ed6b9c738dc8939e4a43fb54389bf",
   "source_worktree_delta": {
-    "README.md": "6813345ff52abdab8f9f50ec258ff2149bf74f984f73f27cf0a0e336e777107c",
-    "docs/local-protection.md": "973c7fa4a35d7749ad6c5361156c2c947a7abe8bf5ff86d89262e8126c36d384",
-    "docs/release-claims-v0.6.0-rc1.md": "b01e252365dc754659c3b26ef98797aec15d972c0bd434bf989c227169090028",
-    "tools/build_community_export.py": "CANDIDATE_NOTICE documentation constant only; executable AST unchanged"
-  },
-  "status": "UNPUBLISHED_DOCUMENTATION_CORRECTED_RC1"
+    "README.md": "4d3a89214a275ce5686cea689533b6fdeaf04a52804c626565f274f280f2e31c",
+    "docs/release-claims-v0.6.0-rc1.md": "e8b9951ca84264ff179afcb00003da3d156d1cd2882ac97ef2edb247b0ef41dd",
+    "secureinjections/persistent_state/store.py": "52014768b3d0f4e2932712ef70c11d7a285633be57b6209c535dbdcaf47cc079",
+    "tests/test_gateway_recovery_v03c3c.py": "878b6aad4a515aeb45d92b5d79ba21757652b1284f8bfec7ad4bc6ea44644964"
+  }
 }

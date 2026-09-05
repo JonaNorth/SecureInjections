@@ -14,9 +14,10 @@ or side effects continue.
 ## Community candidate status
 
 `v0.6.0-rc1` is the first installable SecureInjections Community product candidate. Jonathan
-completed manual RC runtime validation: PASS. This documentation-corrected candidate is publication-ready,
-subject to separate publication authorization. It has not
-yet been published. It is intended for supported local evaluation, with the limitations below.
+completed manual RC runtime validation against the historical Phase 5 candidate: PASS.
+This SQLite portability correction changes runtime code and requires targeted manual revalidation
+before publication consideration. Publication requires separate authorization. It is intended for
+supported local evaluation, with the limitations below.
 
 ## What Community includes
 

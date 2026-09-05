@@ -2,8 +2,9 @@
 
 This is a non-published Community candidate prepared under Apache-2.0 with signed human rights
 evidence recorded privately. Jonathan completed manual RC runtime validation against the Phase 5 candidate: PASS. Runtime validation
-is carried forward because the documentation-corrected candidate preserves runtime/UI bytes and
-passes clean rebuilt-artifact E2E. Publication requires a separate authorization.
+is not automatically carried forward to this SQLite portability correction because runtime code
+changed. Targeted manual revalidation is required before publication consideration; the Phase 5
+result remains historical evidence. Publication requires a separate authorization.
 
 | Capability | Candidate status | Boundary |
 | --- | --- | --- |

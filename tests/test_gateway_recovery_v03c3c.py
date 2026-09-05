@@ -11,6 +11,7 @@ import threading
 from dataclasses import replace
 from pathlib import Path
 from queue import Queue
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -1819,3 +1820,73 @@ def test_direct_fake_recovery_call_without_dispatch_handle_fails(tmp_path: Path)
         FakeDestination.invoke_recovery(runner, object(), candidate, _action())
     assert runner.effect_count == 0
     gateway.close()
+
+
+@pytest.mark.parametrize("extension_api", [True, False], ids=["api-present", "api-absent"])
+def test_authority_connection_optional_extension_api(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, extension_api: bool
+) -> None:
+    from secureinjections.persistent_state import StateDirectoryError, store
+    from secureinjections.persistent_state.directory import prepare_paths
+
+    calls: list[bool] = []
+    connections: list[sqlite3.Connection] = []
+
+    class Connection(sqlite3.Connection):
+        def __getattribute__(self, name: str) -> Any:
+            if not extension_api and name in {"enable_load_extension", "load_extension"}:
+                raise AttributeError(name)
+            return super().__getattribute__(name)
+
+        def enable_load_extension(self, enabled: bool) -> None:
+            calls.append(enabled)
+            assert enabled is False
+            disable = getattr(super(), "enable_load_extension", None)
+            if disable is not None:
+                disable(False)
+
+    def connect(*args: Any, **kwargs: Any) -> sqlite3.Connection:
+        connection = sqlite3.connect(*args, **kwargs, factory=Connection)
+        connections.append(connection)
+        return connection
+
+    # Replace only the store's module binding, retaining real SQLite behavior.
+    monkeypatch.setattr(store, "sqlite3", SimpleNamespace(**{**vars(sqlite3), "connect": connect}))
+    config = PersistentStateConfig(
+        tmp_path / "authority", "sqlite-portability", busy_timeout_ms=1234
+    )
+    paths = prepare_paths(tmp_path / "authority", create=True)
+    paths.database.touch(mode=0o600)
+    identity = paths.database.stat()
+    try:
+        connection, journal = store._open_connection(paths, config, create=True)
+        assert calls == ([False] if extension_api else [])
+        assert connection.row_factory is sqlite3.Row
+        assert journal == "wal"
+        for pragma, expected in {
+            "foreign_keys": 1,
+            "synchronous": 2,
+            "busy_timeout": 1234,
+            "trusted_schema": 0,
+            "journal_mode": "wal",
+        }.items():
+            assert connection.execute(f"PRAGMA {pragma}").fetchone()[0] == expected
+        with pytest.raises(sqlite3.OperationalError, match="not authorized|no such function"):
+            connection.execute("SELECT load_extension('nonexistent-test-extension')")
+        after = paths.database.stat()
+        assert (after.st_dev, after.st_ino) == (identity.st_dev, identity.st_ino)
+        assert after.st_mode & 0o777 == 0o600
+        connection.close()
+        paths.database.chmod(0o644)
+        with pytest.raises(StateDirectoryError):
+            store._open_connection(paths, config, create=False)
+        paths.database.chmod(0o600)
+        target = paths.database.with_suffix(".original")
+        paths.database.rename(target)
+        paths.database.symlink_to(target)
+        with pytest.raises(StateDirectoryError, match="symlink"):
+            store._open_connection(paths, config, create=False)
+        assert len(connections) == 1
+    finally:
+        for connection in connections:
+            connection.close()

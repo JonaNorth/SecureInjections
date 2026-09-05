@@ -1714,7 +1714,9 @@ def _open_connection(
     except sqlite3.Error as exc:
         raise StateDirectoryError("authority database could not be opened") from exc
     connection.row_factory = sqlite3.Row
-    connection.enable_load_extension(False)
+    disable_load_extension = getattr(connection, "enable_load_extension", None)
+    if disable_load_extension is not None:
+        disable_load_extension(False)
     connection.execute("PRAGMA foreign_keys = ON")
     connection.execute("PRAGMA synchronous = FULL")
     connection.execute(f"PRAGMA busy_timeout = {config.busy_timeout_ms}")

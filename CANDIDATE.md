@@ -1,8 +1,7 @@
-# SecureInjections Community v0.6.0-rc1
+# SecureInjections Community v0.6.0-rc1 — SQLite portability candidate
 
-This Community prerelease candidate completed automated and manual Level 1 validation.
-See README.md for supported scope, installation, privacy and limitations; see LICENSE and NOTICE
-for the Apache-2.0 Community boundary. Pro and Level 2 capabilities are future work.
-
-This documentation-corrected candidate remains unpublished. Final publication requires separate
-authorization; local preparation does not itself authorize publication.
+This unpublished candidate contains a narrowly scoped SQLite API portability fix.
+Prior manual validation remains historical evidence; this runtime change requires
+targeted manual revalidation before publication consideration. See README.md for
+supported scope and LICENSE/NOTICE for the Apache-2.0 Community boundary.
+No publication, tag, release, or PyPI upload is authorized.
