@@ -1,5 +1,20 @@
 # Changelog
 
+## Native macOS 0.1.0 — private beta candidate
+
+The current native product version is `0.1.0`. Its proprietary implementation is maintained
+outside this public repository. The beta build provides a local MCP Gateway, protected
+`read_workspace_file` and `write_workspace_file`
+operations, ALLOW / REVIEW / BLOCK decisions, exact-action Approve Once, and setup for Cursor,
+Claude Code, Codex CLI, and Codex Desktop.
+
+The customer packaging path produces a Developer ID signed, Apple-notarized,
+Gatekeeper-accepted DMG. This entry records repository state only; it does not declare a public
+release, create a tag, or announce beta enrollment.
+
+Current client-native filesystem and shell capabilities can bypass the protected MCP tools.
+Endpoint Security filesystem enforcement remains pending research and Apple entitlement review.
+
 ## v0.6.0-rc1 — private technical candidate
 
 Proposed SecureInjections Community open-core candidate. This version packages the validated

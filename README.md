@@ -1,157 +1,154 @@
-# SecureInjections Community
+# SecureInjections
 
-Local AI security for supported workflows routed through SecureInjections.
+**A local runtime security boundary for supported AI coding-agent actions.**
 
-SecureInjections Community is an inspectable enforcement product for evaluating how untrusted
-prompts, model responses, files, retrieval content, tool calls, memory writes, and agent actions
-cross an AI security boundary. It applies `ALLOW`, `REVIEW`, or `BLOCK` before protected traffic
-or side effects continue.
+SecureInjections adds an independent decision point between supported AI clients and two protected
+workspace file operations. It runs on the user's Mac and applies `ALLOW`, `REVIEW`, or `BLOCK`
+before an operation routed through its boundary continues.
 
-> Detection is best effort. SecureInjections does not protect every AI application, scan your
-> whole Mac, prevent every prompt injection, or control operations that bypass its documented
-> boundaries.
+> **Beta / pre-release:** The native macOS product is currently version `0.1.0`. A Developer ID
+> signed, Apple-notarized, Gatekeeper-accepted DMG distribution path exists, but this repository
+> does not announce a public download, beta enrollment, or stable release.
 
-## Community candidate status
+## What it protects today
 
-`v0.6.0-rc1` is the first installable SecureInjections Community product candidate. Jonathan
-completed manual RC runtime validation against the historical Phase 5 candidate: PASS.
-This SQLite portability correction changes runtime code and requires targeted manual revalidation
-before publication consideration. Publication requires separate authorization. It is intended for
-supported local evaluation, with the limitations below.
+The current protected MCP surface is exactly:
 
-## What Community includes
+- `read_workspace_file`
+- `write_workspace_file`
 
-- Deterministic Guard inspection and policy enforcement
-- Capability-separated Gateway boundaries
-- OpenAI-compatible Guard Proxy for explicitly configured loopback traffic
-- Manual one-file-at-a-time inspection through SafeFileReader-backed enforcement
-- A basic protected local-agent interaction using host-owned safe references
-- Basic privacy-bounded Activity
-- A minimal browser product shell
-- `start`, `status`, `doctor`, `inspect`, and integration-scope commands
-- A supported local Ollama evaluation path using `qwen2.5:7b`
-- Exact Open WebUI 0.11.0 guidance with streaming off through Guard Proxy
+`ALLOW` lets an eligible operation proceed. `REVIEW` pauses the exact action for a decision in the
+SecureInjections app. **Approve Once** is narrow, session-bound, and single-use. `BLOCK` stops the
+operation and cannot be overridden through the AI client.
 
-`REVIEW` means the operation stopped. Community has no “continue anyway” authorization path.
+SecureInjections controls these operations at runtime through its Gateway. It does not treat model
+instructions, MCP metadata, client configuration, or routing preferences as authority.
 
-## Community and planned Pro
+## Supported clients
 
-| Community candidate | Planned Pro product |
-| --- | --- |
-| Manual, explicit file and prompt workflows | Continuous and managed protection workflows |
-| One file selected and inspected at a time | Level 2 selected-folder/workspace monitoring |
-| Basic loopback product lifecycle | Native/background/autostart lifecycle |
-| Manual Guard Proxy activation | Automated integration setup and orchestration |
-| Basic bounded Activity | Advanced history, search, reporting, and policy management |
-| One validated local setup | Additional supported integrations and managed deployment |
-| Local evaluation and security transparency | Commercial updates and future team/enterprise controls |
+The native beta supports local MCP integration with:
 
-Pro capabilities are planned; they are not included or advertised as shipped in this candidate.
-Community has no scan counters, time limits, or artificial local feature flags.
+- Cursor
+- Claude Code
+- Codex CLI
+- Codex Desktop's local task/workspace surface
 
-## Supported scope
+Codex Desktop and Codex CLI share one local Codex MCP registration. Codex Desktop support does not
+include ordinary hosted ChatGPT chats, ChatGPT web, or Business/Work MCP configuration. Tool
+selection remains model-driven where a client has no deterministic routing control, and support
+does not imply compatibility with every client version or feature.
 
-- Platform: macOS Apple Silicon
-- Python: 3.11 or newer
-- Local runtime: Ollama on loopback
-- Validated model: `qwen2.5:7b`
-- Primary traffic route: Guard Proxy to local Ollama
-- Open WebUI: exactly 0.11.0, streaming off, native Ollama provider disabled for the protected
-  model, routed through Guard Proxy
-- Generic OpenAI-compatible local runtimes: experimental
+## How it works
 
-Windows and Linux are unvalidated. Ollama, Open WebUI, and model weights are not bundled or
-downloaded automatically.
-
-## Install the Community prerelease
-
-There is no PyPI release for this candidate. After the GitHub prerelease is published, download
-the wheel from its assets and verify its SHA-256 against the release notes. Install the downloaded
-wheel with the service extra:
-
-```console
-python3 -m venv .venv
-.venv/bin/python -m pip install './secureinjections-0.6.0rc1-py3-none-any.whl[service]'
-.venv/bin/secureinjections --version
-.venv/bin/secureinjections doctor
-```
-
-Run these commands from the directory containing the downloaded wheel. Activate the environment
-with `source .venv/bin/activate` before using the commands below. Install Ollama and
-`qwen2.5:7b` separately; SecureInjections does not download them automatically.
-
-## Start and evaluate
-
-```console
-secureinjections start
-```
-
-The browser shell opens on a loopback URL. It reports real service and integration state; loading
-the UI does not make an integration active.
-
-Useful commands:
-
-```console
-secureinjections status
-secureinjections doctor
-secureinjections inspect --text 'ordinary question' --source user --destination model
-secureinjections integrations
-```
-
-In the browser:
-
-1. Use **Files** to select and inspect one local file.
-2. Use **Protection** for a basic guarded prompt interaction.
-3. Use **Integrations** to activate the owned Guard Proxy when local Ollama is ready.
-4. Use **Activity** to inspect bounded decisions without raw prompt or file content.
-
-Stop the product with `Ctrl-C`. Only product-owned child processes are stopped.
-
-## Privacy and local data
-
-Normal product state lives under:
+1. **Choose a workspace.** The native host retains the macOS authorization for that workspace.
+2. **Connect a supported client.** SecureInjections registers a bundled local stdio bridge; no
+   workspace authority or runtime bearer token is stored in client configuration.
+3. **Use the client normally.** Supported routed reads and writes pass through the authenticated
+   local Gateway and receive an ALLOW, REVIEW, or BLOCK decision.
 
 ```text
-~/Library/Application Support/SecureInjections/
+Supported AI client
+  → bundled stdio bridge
+  → private same-user broker
+  → authenticated loopback MCP Gateway
+  → host-held workspace authorization
+  → Guard and bounded file implementation
 ```
 
-Persisted state includes safe configuration, onboarding preference, and bounded audit/activity
-metadata. Safe file references, Guard Proxy process ownership, and agent workflow state are
-session-only. Raw prompts, model output, and blocked file content are not retained by the normal
-privacy-bounded activity path.
+Processing and REVIEW handling occur locally. SecureInjections has no product telemetry or
+SecureInjections-operated cloud service in the current native runtime. Third-party AI clients may
+send data to their own providers under their own settings and policies; see [PRIVACY.md](PRIVACY.md).
 
-## Security model
+## Install and onboarding
 
-The key invariants are:
+For an authorized beta build:
 
-- Text is not authority.
-- Peer data is not host authority.
-- File content is not execution authority.
-- Model output is not host authorization.
-- Browser state is not a security capability.
-- A listening port is not proof that SecureInjections owns or trusts a process.
+1. Open the SecureInjections DMG.
+2. Drag SecureInjections to Applications and open it normally.
+3. Choose the workspace to protect and start the MCP Gateway.
+4. Set up each detected supported client you use.
+5. Return to the AI client and ask for ordinary workspace file work. SecureInjections appears when
+   REVIEW is required.
 
-Read [SECURITY.md](SECURITY.md), [the threat model](docs/threat-model.md),
-[privacy](docs/privacy.md), and [supported integrations](docs/supported-integrations.md).
+The native macOS beta is not currently distributed publicly from this repository.
+Installation guidance will accompany authorized beta builds.
 
 ## Current limitations
 
-- Only explicitly routed, supported workflows are protected.
-- REVIEW stops and cannot currently be approved in the product UI.
-- Streaming Guard Proxy responses are unsupported.
-- Open WebUI support is exact to the tested 0.11.0 topology.
-- Detection may produce false positives and false negatives.
-- No native installer, autostart daemon, automatic updater, or Level 2 workspace monitoring is
-  included.
+SecureInjections protects only operations routed through its two supported workspace tools.
+Supported clients currently retain native readers, editors, patch tools, shell commands, or
+terminal capabilities that can bypass this boundary.
 
-## Development and security reporting
+SecureInjections is therefore **not**:
 
-The project repository is [JonaNorth/SecureInjections](https://github.com/JonaNorth/SecureInjections).
-Report security issues through the private security-advisory process described in
-[SECURITY.md](SECURITY.md); do not include real credentials, private data, or customer prompts.
+- whole-Mac protection or system-wide interception;
+- guaranteed prevention of every prompt injection;
+- enforced confinement of native client filesystem or shell access;
+- universal MCP compatibility; or
+- current protection for network/egress, browser, GitHub, email, or arbitrary third-party tools.
 
-## License status
+Filesystem enforcement using macOS Endpoint Security is being researched, and the required Apple
+entitlement request is pending review. It is not included in the current product and will not be
+claimed until both entitlement approval and technical feasibility are proven.
 
-Community is free and prepared under Apache-2.0; see [LICENSE](LICENSE) and the scoped
-[NOTICE](NOTICE). Historical grants remain unchanged. Planned paid Pro source remains private.
-Only the explicit Community boundary is included in this candidate.
+Read the complete [security boundary and limitations](SECURITY.md).
+
+## Distribution trust
+
+The customer distribution path produces a Developer ID signed, Apple-notarized, and
+Gatekeeper-accepted application and DMG. Notarization means Apple's automated notary service
+accepted the submitted signed artifact. It is not Apple App Review, an endorsement, or a security
+certification.
+
+No customer DMG, GitHub Release, or public download is published by this README.
+
+## Roadmap direction
+
+Future capability work is expected to proceed in this order, subject to feasibility:
+
+1. Filesystem enforcement for supported clients
+2. Shell/process capability protection
+3. Network and egress controls
+4. Broader MCP capability protection
+
+No delivery dates are promised, and roadmap items are not current features.
+
+## Repository tracks and versions
+
+SecureInjections currently has two distinct product tracks:
+
+- **Native macOS product:** version `0.1.0`, currently under private development as a beta /
+  pre-release product. Its proprietary implementation is not included in this public repository.
+- **Community package candidate:** Python package version `0.6.0rc1`, sourced from
+  [`pyproject.toml`](pyproject.toml), retained as a separate technical candidate and evaluation
+  track.
+
+Version numbers are not interchangeable. Neither version implies that a GitHub Release or public
+package has been published.
+
+The Community track includes the deterministic Guard, capability-separated Gateway, loopback
+Guard Proxy, manual inspection, local Ollama evaluation path, and supporting security research.
+Its detailed validation and setup material remains under [`docs/`](docs/).
+
+## Development
+
+This public repository contains the Community Python implementation, security research, and
+supporting validation material. Start with [docs/validation.md](docs/validation.md).
+
+Do not use real credentials, customer prompts, or private workspace contents in bug reports or
+fixtures.
+
+## Privacy and security
+
+- [Native product privacy baseline](PRIVACY.md)
+- [Security policy, boundary, and limitations](SECURITY.md)
+- [Threat model](docs/threat-model.md)
+
+Report vulnerabilities using the private security-advisory process described in
+[SECURITY.md](SECURITY.md), not a public issue.
+
+## License scope
+
+The prepared Community release boundary is under Apache-2.0; see [LICENSE](LICENSE) and
+[NOTICE](NOTICE). The notice defines the scoped Community grant. It does not automatically extend
+that grant to private Pro-only or excluded research source.

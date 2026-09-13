@@ -1,5 +1,54 @@
 # Security policy
 
+## Native macOS product security boundary
+
+SecureInjections is a local runtime security boundary for supported AI-agent actions. Its current
+protected MCP surface is exactly:
+
+- `read_workspace_file`
+- `write_workspace_file`
+
+When a supported client routes one of these operations through SecureInjections, the native host
+holds the selected workspace authority and the Gateway applies an `ALLOW`, `REVIEW`, or `BLOCK`
+decision before the protected operation continues. A REVIEW decision waits for a decision in the
+SecureInjections app. **Approve Once** is bound to the exact action, workspace, resource, and
+runtime session and is single-use. Stop, Quit, timeout, denial, session replacement, or relevant
+restart invalidates it. A BLOCK decision cannot be overridden through the AI client.
+
+The current supported client integrations are Cursor, Claude Code, Codex CLI, and the local Codex
+Desktop task/workspace surface. Codex Desktop support does not imply support for ordinary hosted
+ChatGPT chats, ChatGPT web, or Business/Work MCP configuration. Tool selection remains
+model-driven where a client provides no deterministic routing mechanism.
+
+Client setup, tool descriptions, prompts, and approval preferences help route an operation. They
+are not filesystem authority. The selected workspace, macOS authorization, Gateway capability,
+and exact REVIEW decision remain host-controlled.
+
+### Current limitations
+
+SecureInjections currently protects only operations routed through its two supported workspace
+file tools. Supported clients retain alternate capabilities that may bypass this boundary,
+including native file readers and editors, patch tools, and shell or terminal commands.
+
+SecureInjections therefore does **not** currently provide:
+
+- whole-Mac protection or system-wide interception;
+- guaranteed prevention of every prompt injection, false positive, or false negative;
+- universal MCP-client or third-party-tool compatibility;
+- enforced confinement of client-native filesystem or shell access;
+- network or arbitrary egress control;
+- browser, GitHub, or email action protection; or
+- generic protection for arbitrary MCP servers and tools.
+
+macOS Endpoint Security filesystem enforcement is being researched, and the required entitlement
+request is pending Apple review. It is not present in the shipped product and must not be claimed
+until Apple approval and technical feasibility—including safe client process separation—are both
+proven.
+
+The customer build is Developer ID signed, Apple notarized, and Gatekeeper accepted. Notarization
+means Apple's automated notary service accepted the submitted signed artifact. It does not mean
+Apple approved, audited, certified, or endorsed SecureInjections or its security claims.
+
 ## Reporting a vulnerability
 
 Do not open a public issue for a vulnerability that could put users at immediate risk. Use
@@ -15,7 +64,7 @@ reporting is enabled for the public repository before publishing this release. R
 configuration cannot prove that hosted setting is active, and this document does not claim that it
 is enabled.
 
-## Supported security claims
+## Community candidate security claims
 
 The private SecureInjections Community v0.6.0-rc1 candidate has a local,
 loopback-only, non-streaming, deterministic-first enforcement for instrumented LLM and agent
